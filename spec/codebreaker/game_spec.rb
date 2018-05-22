@@ -93,10 +93,8 @@ module Codebreaker
 
         describe '#hint' do
           context 'when hints available ' do
-            let(:get_hint) { game.hint; game.hints }
-
             it 'reduce by one' do
-              expect(get_hint).to eq(1)
+              expect { game.hint }.to change { game.hints }.from(2).to(1)
             end
           end
 
