@@ -75,6 +75,22 @@ module Codebreaker
           end
         end
 
+        describe '#process' do
+          it 'returns self.result'
+        end
+
+        describe '#won?' do
+          it 'returns true or false'
+        end
+
+        describe '#hint' do
+          it 'count down self.hints and returns self.secret_code sample'
+        end
+
+        describe '#score' do
+          it 'returns score'
+        end
+
       end
 
 
