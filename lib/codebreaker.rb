@@ -1,3 +1,1 @@
-module Codebreaker
-
-end
+require_relative 'codebreaker/game'
