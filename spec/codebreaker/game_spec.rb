@@ -55,9 +55,23 @@ module Codebreaker
               expect(secret_code.size).to eq(4)
             end
 
-            it 'consists of digits in range 1..6 only' do
+            it 'consists of digits in range 1..6' do
               expect(secret_code.join).to match(/[1-6]+/)
             end
+          end
+        end
+
+        describe '#guess_valid?' do
+          it 'accepts string only' do
+            expect(game.guess_valid?(1)).to eq(false)
+          end
+
+          it 'include digits only' do
+            expect(game.guess_valid?('1a')).to eq(false)
+          end
+
+          it 'consists of 4 digis in range 1..6' do
+            expect(game.guess_valid?('2416')).to eq(true)
           end
         end
 
