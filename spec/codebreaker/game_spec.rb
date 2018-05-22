@@ -43,6 +43,22 @@ module Codebreaker
           describe '#hints' do
             specify { expect(game.hints).to eq(2) }
           end
+
+          describe '#secret_code' do
+            let(:secret_code) { game.instance_variable_get(:@secret_code) }
+
+            it 'haves secret code' do
+              expect(secret_code).not_to be_empty
+            end
+
+            it 'haves 4 digits' do
+              expect(secret_code.size).to eq(4)
+            end
+
+            it 'consists of digits in range 1..6 only' do
+              expect(secret_code.join).to match(/[1-6]+/)
+            end
+          end
         end
 
       end
