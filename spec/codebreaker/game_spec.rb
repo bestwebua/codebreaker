@@ -87,7 +87,7 @@ module Codebreaker
           end
 
           context 'if method was called' do
-            before { game.instance_variable_set(:@secret_code, [1 ,2 ,3, 4]) }
+            before { game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
 
             it 'result may be changed' do
               expect(game.to_guess('1234')).not_to be_empty
