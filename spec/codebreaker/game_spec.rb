@@ -12,13 +12,13 @@ module Codebreaker
     end
 
     describe '#new' do
-      context 'object was created without block' do
+      context 'without block' do
         it 'returns RuntimeError' do
           expect {subject}.to raise_error(RuntimeError, 'The configuration is incomplete')
         end
       end
 
-      context 'object was created with block' do
+      context 'with block' do
         describe '#configuration' do
           let(:instance_methods) { GameConfiguration.instance_methods(all=false).sort }
 
@@ -137,10 +137,7 @@ module Codebreaker
             specify { expect { get_score }.to change { game.score }.from(0).to(190) }
           end
         end
-
       end
-
-
     end
   end
 end
