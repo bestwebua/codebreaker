@@ -50,6 +50,7 @@ module Codebreaker
 
           describe '#secret_code' do
             let(:secret_code) { game.instance_variable_get(:@secret_code) }
+            specify { expect(secret_code).to be_an_instance_of(Array) }
 
             it 'haves secret code' do
               expect(secret_code).not_to be_empty
