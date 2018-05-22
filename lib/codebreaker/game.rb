@@ -5,7 +5,7 @@ module Codebreaker
     attr_reader :attempts, :hints, :configuration
 
     def initialize
-      @configuration ||= Codebreaker::GameConfiguration.new
+      @configuration ||= GameConfiguration.new
       yield @configuration if block_given?
       apply_configuration
       generate_secret_code
@@ -17,7 +17,7 @@ module Codebreaker
 
     def process(input)
       @attempts -= 1
-      @result = Codebreaker::Processor.new(input, @secret_code).result
+      @result = Processor.new(input, @secret_code).result
     end
 
     def won?
