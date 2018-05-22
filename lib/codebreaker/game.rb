@@ -25,7 +25,7 @@ module Codebreaker
     end
 
     def hint
-      raise 'Oops, no hints left!' if @hints.zero? 
+      raise 'Oops, no hints left!' if hints.zero? 
       @hints -= 1
       @secret_code.sample
     end
