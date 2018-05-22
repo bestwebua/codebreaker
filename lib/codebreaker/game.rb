@@ -18,7 +18,7 @@ module Codebreaker
     def to_guess(input)
       raise 'Oops, no attempts left!' if attempts.zero?
       @attempts -= 1
-      @result = Processor.new(input, @secret_code).get_result
+      @result = fancy_algo(input, @secret_code)
     end
 
     def won?
@@ -32,18 +32,7 @@ module Codebreaker
     end
 
     def score
-      level_rates = case configuration.level
-        when :simple then [10, 0]
-        when :middle then [20, 20]
-        when :hard then [50, 30]
-      end
-
-      attempt_rate, hint_rate = level_rates
-      used_attempts = configuration.attempts - attempts
-      used_hints = configuration.hints - hints
-      bonus = self.won? ? 200 : 0
-
-      used_attempts*attempt_rate - used_hints*hint_rate + bonus
+      calculate_score
     end
 
     private
@@ -58,6 +47,32 @@ module Codebreaker
 
     def generate_secret_code
       @secret_code = (1..4).map { rand(1..6) }
+    end
+
+    def fancy_algo(guess, secret_code)
+      result = guess.chars.map(&:to_i).map.with_index do |item, index|
+        case
+          when item == secret_code[index] then '+'
+          when secret_code[index..-1].include?(item) then '-'
+          else ''
+        end
+      end
+      result.join
+    end
+
+    def calculate_score
+      level_rates = case configuration.level
+        when :simple then [10, 0]
+        when :middle then [20, 20]
+        when :hard then [50, 30]
+      end
+
+      attempt_rate, hint_rate = level_rates
+      used_attempts = configuration.attempts - attempts
+      used_hints = configuration.hints - hints
+      bonus_points = won? ? 200 : 0
+
+      used_attempts*attempt_rate - used_hints*hint_rate + bonus_points
     end
   end
 end
