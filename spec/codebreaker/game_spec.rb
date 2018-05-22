@@ -7,7 +7,7 @@ module Codebreaker
         config.player_name = 'Mike'
         config.attempts = 5
         config.hints = 2
-        config.level = :middle
+        config.level = :simple
       end
     end
 
@@ -116,7 +116,26 @@ module Codebreaker
         end
 
         describe '#score' do
-          it 'returns score'
+          before { game.instance_variable_set(:@configuration, game.configuration.dup) }
+          let(:get_score) do
+              game.instance_variable_set(:@attempts, 0)
+              game.instance_variable_set(:@hints, 0)
+              game.score
+            end
+
+          context 'simple' do
+            specify { expect { get_score }.to change { game.score }.from(0).to(50) }
+          end
+
+          context 'middle' do
+            before { game.configuration.level = :middle }
+            specify { expect { get_score }.to change { game.score }.from(0).to(60) }
+          end
+
+          context 'hard' do
+            before { game.configuration.level = :hard }
+            specify { expect { get_score }.to change { game.score }.from(0).to(190) }
+          end
         end
 
       end
