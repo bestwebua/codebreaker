@@ -92,7 +92,29 @@ module Codebreaker
         end
 
         describe '#hint' do
-          it 'count down self.hints and returns self.secret_code sample'
+          context 'when hints available ' do
+            let(:get_hint) { game.hint; game.hints }
+
+            it 'reduce by one' do
+              expect(get_hint).to eq(1)
+            end
+          end
+
+          context 'when hint was called' do
+            let(:secret_code) { game.instance_variable_get(:@secret_code) }
+
+            it 'returns one of 4 secret digits' do
+              expect(secret_code).to include(game.hint)
+            end
+          end
+
+          context 'when no hints left' do
+            before { game.instance_variable_set(:@hints, 0) }
+
+            it 'raise RuntimeError' do
+              expect { game.hint }.to raise_error(RuntimeError, 'Oops, no hints left!')
+            end
+          end
         end
 
         describe '#score' do
