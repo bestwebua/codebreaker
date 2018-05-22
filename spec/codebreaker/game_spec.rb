@@ -27,7 +27,7 @@ module Codebreaker
           end
 
           it 'immutable object' do
-            expect(game.configuration.frozen?).to eq(true)
+            expect(game.configuration.frozen?).to be(true)
           end
 
           it 'haves necessary instance methods' do
@@ -63,15 +63,15 @@ module Codebreaker
 
         describe '#guess_valid?' do
           it 'accepts string only' do
-            expect(game.guess_valid?(1)).to eq(false)
+            expect(game.guess_valid?(1)).to be(false)
           end
 
           it 'include digits only' do
-            expect(game.guess_valid?('1a')).to eq(false)
+            expect(game.guess_valid?('1a')).to be(false)
           end
 
           it 'consists of 4 digis in range 1..6' do
-            expect(game.guess_valid?('2416')).to eq(true)
+            expect(game.guess_valid?('2416')).to be(true)
           end
         end
 
@@ -80,7 +80,15 @@ module Codebreaker
         end
 
         describe '#won?' do
-          it 'returns true or false'
+          context 'when result equal ++++' do
+            before { game.instance_variable_set(:@result, '++++') }
+            specify { expect(game.won?).to be(true) }
+          end
+
+          context 'when result not equal ++++' do
+            before { game.instance_variable_set(:@result, '+-+-') }
+            specify { expect(game.won?).to be(false) }
+          end
         end
 
         describe '#hint' do
