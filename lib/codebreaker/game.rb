@@ -15,9 +15,10 @@ module Codebreaker
       input.is_a?(String) && !!input[/[1-6]{4}/]
     end
 
-    def process(input)
+    def to_guess(input)
+      raise 'Oops, no attempts left!' if attempts.zero?
       @attempts -= 1
-      @result = Processor.new(input, @secret_code).result
+      @result = Processor.new(input, @secret_code).get_result
     end
 
     def won?
@@ -25,7 +26,7 @@ module Codebreaker
     end
 
     def hint
-      raise 'Oops, no hints left!' if hints.zero? 
+      raise 'Oops, no hints left!' if hints.zero?
       @hints -= 1
       @secret_code.sample
     end
@@ -52,6 +53,7 @@ module Codebreaker
       configuration.freeze
       @attempts = configuration.attempts
       @hints = configuration.hints
+      @result = ''
     end
 
     def generate_secret_code
