@@ -35,6 +35,11 @@ module Codebreaker
           end
         end
 
+        context '#initialize' do
+          describe '#attempts' do
+            specify { expect(game.attempts).to eq(5) }
+          end
+        end
 
       end
 
