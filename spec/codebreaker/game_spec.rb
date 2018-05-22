@@ -39,6 +39,10 @@ module Codebreaker
           describe '#attempts' do
             specify { expect(game.attempts).to eq(5) }
           end
+
+          describe '#hints' do
+            specify { expect(game.hints).to eq(2) }
+          end
         end
 
       end
