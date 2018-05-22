@@ -20,14 +20,21 @@ module Codebreaker
 
       context 'object was created with block' do
         describe '#configuration' do
-          it 'struct object of GameConfiguration' do
+          let(:instance_methods) { GameConfiguration.instance_methods(all=false).sort }
+
+          it 'GameConfiguration stuct object' do
             expect(game.configuration).to be_an_instance_of(GameConfiguration)
           end
 
-          it 'immutable' do
+          it 'immutable object' do
             expect(game.configuration.frozen?).to eq(true)
           end
+
+          it 'haves necessary instance methods' do
+            expect(instance_methods).to eq(%i(attempts attempts= hints hints= level level= player_name player_name=))
+          end
         end
+
 
       end
 
