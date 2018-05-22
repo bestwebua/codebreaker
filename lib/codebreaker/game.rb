@@ -12,7 +12,7 @@ module Codebreaker
     end
 
     def guess_valid?(input)
-      !!input[/[1-6]{4}/]
+      input.is_a?(String) && !!input[/[1-6]{4}/]
     end
 
     def process(input)
