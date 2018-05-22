@@ -44,6 +44,10 @@ module Codebreaker
             specify { expect(game.hints).to eq(2) }
           end
 
+          describe '#result' do
+            specify { expect(game.instance_variable_get(:@result)).to be_empty }
+          end
+
           describe '#secret_code' do
             let(:secret_code) { game.instance_variable_get(:@secret_code) }
 
@@ -75,8 +79,32 @@ module Codebreaker
           end
         end
 
-        describe '#process' do
-          it 'returns self.result'
+        describe '#to_guess' do
+          context 'if attempts are available' do
+            it 'reduce attempts by one' do
+              expect { game.to_guess('1111') }.to change { game.attempts }.from(5).to(4)
+            end
+          end
+
+          context 'if method was called' do
+            before { game.instance_variable_set(:@secret_code, [1 ,2 ,3, 4]) }
+
+            it 'result may be changed' do
+              expect(game.to_guess('1234')).not_to be_empty
+            end
+
+            it 'result may not be changed' do
+              expect(game.to_guess('6666')).to be_empty
+            end
+          end
+
+          context 'when no attempts left' do
+            before { game.instance_variable_set(:@attempts, 0) }
+
+            it 'raise RuntimeError' do
+              expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!')
+            end
+          end
         end
 
         describe '#won?' do
@@ -92,7 +120,7 @@ module Codebreaker
         end
 
         describe '#hint' do
-          context 'when hints available ' do
+          context 'when hints are available' do
             it 'reduce by one' do
               expect { game.hint }.to change { game.hints }.from(2).to(1)
             end
