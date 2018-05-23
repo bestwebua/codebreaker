@@ -54,7 +54,7 @@ module Codebreaker
         case
           when item == secret_code[index] then '+'
           when secret_code[index..-1].include?(item) then '-'
-          else ''
+          else ' '
         end
       end
       result.join
