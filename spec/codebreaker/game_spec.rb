@@ -14,13 +14,13 @@ module Codebreaker
     describe '#new' do
       context 'without block' do
         it 'returns RuntimeError' do
-          expect {subject}.to raise_error(RuntimeError, 'The configuration is incomplete')
+          expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.')
         end
       end
 
       context 'with block' do
         describe '#configuration' do
-          let(:instance_methods) { GameConfiguration.instance_methods(all=false).sort }
+          let(:instance_methods) { GameConfiguration.instance_methods(all = false).sort }
 
           it 'GameConfiguration stuct object' do
             expect(game.configuration).to be_an_instance_of(GameConfiguration)
@@ -166,14 +166,13 @@ module Codebreaker
         end
 
         describe '#score' do
-
           describe 'levels' do
             before { game.instance_variable_set(:@configuration, game.configuration.dup) }
             let(:get_score) do
-                game.instance_variable_set(:@attempts, 0)
-                game.instance_variable_set(:@hints, 0)
-                game.score
-              end
+              game.instance_variable_set(:@attempts, 0)
+              game.instance_variable_set(:@hints, 0)
+              game.score
+            end
 
             context 'simple' do
               specify { expect { get_score }.to change { game.score }.from(0).to(50) }
