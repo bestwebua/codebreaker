@@ -187,6 +187,11 @@ module Codebreaker
               before { game.configuration.level = :hard }
               specify { expect { get_score }.to change { game.score }.from(0).to(190) }
             end
+
+            context 'unknown' do
+              before { game.configuration.level = :unknown }
+              specify { expect { get_score }.to raise_error(RuntimeError, 'Unknown game level.') }
+            end
           end
 
           context 'bonus points' do
