@@ -5,8 +5,8 @@ module Codebreaker
     let(:game) do
       Game.new do |config|
         config.player_name = 'Mike'
-        config.attempts = 5
-        config.hints = 2
+        config.max_attempts = 5
+        config.max_hints = 2
         config.level = :simple
       end
     end
@@ -20,7 +20,7 @@ module Codebreaker
 
       context 'with block' do
         describe '#configuration' do
-          let(:instance_methods) { GameConfiguration.instance_methods(all = false).sort }
+          let(:instance_methods) { GameConfiguration.instance_methods(all = false) }
 
           it 'GameConfiguration stuct object' do
             expect(game.configuration).to be_an_instance_of(GameConfiguration)
@@ -30,8 +30,8 @@ module Codebreaker
             expect(game.configuration.frozen?).to be(true)
           end
 
-          it 'haves necessary instance methods' do
-            expect(instance_methods).to eq(%i[attempts attempts= hints hints= level level= player_name player_name=])
+          it 'has necessary instance methods' do
+            expect(instance_methods).to include(:player_name, :max_attempts, :max_hints, :level)
           end
         end
 

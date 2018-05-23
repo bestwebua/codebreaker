@@ -1,5 +1,5 @@
 module Codebreaker
-  GameConfiguration = Struct.new(:player_name, :attempts, :hints, :level)
+  GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level)
 
   class Game
     BONUS_POINTS, ZERO_POINTS = 200, 0
@@ -43,8 +43,8 @@ module Codebreaker
     def apply_configuration
       raise 'The configuration is incomplete.' if configuration.any?(&:nil?)
       configuration.freeze
-      @attempts = configuration.attempts
-      @hints = configuration.hints
+      @attempts = configuration.max_attempts
+      @hints = configuration.max_hints
       @result = ''
     end
 
@@ -72,8 +72,8 @@ module Codebreaker
       end
 
       attempt_rate, hint_rate = level_rates
-      used_attempts = configuration.attempts - attempts
-      used_hints = configuration.hints - hints
+      used_attempts = configuration.max_attempts - attempts
+      used_hints = configuration.max_hints - hints
       bonus_points = won? ? BONUS_POINTS : ZERO_POINTS
 
       used_attempts*attempt_rate - used_hints*hint_rate + bonus_points
