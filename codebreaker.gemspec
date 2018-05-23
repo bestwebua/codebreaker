@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Codebreaker}
   spec.description   = %q{Logic game in which a code-breaker tries to break a secret code created by a code-maker.}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/bestwebua/homework-04-codebreaker'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -21,4 +21,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.11'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'colorize'
 end
