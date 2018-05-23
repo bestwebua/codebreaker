@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Codebreaker
-  RSpec.describe GameConsole do
+  RSpec.describe Console do
     describe '#new' do
       it 'initialize object'
     end
