@@ -2,6 +2,8 @@ module Codebreaker
   GameConfiguration = Struct.new(:player_name, :attempts, :hints, :level)
 
   class Game
+    BONUS_POINTS, ZERO_POINTS = 200, 0
+
     attr_reader :attempts, :hints, :configuration
 
     def initialize
@@ -12,7 +14,8 @@ module Codebreaker
     end
 
     def guess_valid?(input)
-      input.is_a?(String) && !!input[/[1-6]{4}/]
+      raise 'Invalid input type.' unless input.is_a?(String)
+      !!input[/\A[1-6]{4}\z/]
     end
 
     def to_guess(input)
@@ -38,7 +41,7 @@ module Codebreaker
     private
 
     def apply_configuration
-      raise 'The configuration is incomplete' if configuration.any?(&:nil?)
+      raise 'The configuration is incomplete.' if configuration.any?(&:nil?)
       configuration.freeze
       @attempts = configuration.attempts
       @hints = configuration.hints
@@ -65,12 +68,13 @@ module Codebreaker
         when :simple then [10, 0]
         when :middle then [20, 20]
         when :hard then [50, 30]
+        else raise 'Unknown game level.'
       end
 
       attempt_rate, hint_rate = level_rates
       used_attempts = configuration.attempts - attempts
       used_hints = configuration.hints - hints
-      bonus_points = won? ? 200 : 0
+      bonus_points = won? ? BONUS_POINTS : ZERO_POINTS
 
       used_attempts*attempt_rate - used_hints*hint_rate + bonus_points
     end
