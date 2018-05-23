@@ -81,29 +81,50 @@ module Codebreaker
         end
 
         describe '#to_guess' do
-          context 'if attempts are available' do
-            it 'reduce attempts by one' do
-              expect { game.to_guess('1111') }.to change { game.attempts }.from(5).to(4)
+          describe '#to_guess actions' do
+            context 'if attempts are available' do
+              it 'reduce attempts by one' do
+                expect { game.to_guess('1111') }.to change { game.attempts }.from(5).to(4)
+              end
+            end
+
+            context 'if method was called' do
+              before { game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
+
+              it 'result should be changed' do
+                expect(game.to_guess('1234')).not_to be_empty
+              end
+            end
+
+            context 'when no attempts left' do
+              before { game.instance_variable_set(:@attempts, 0) }
+
+              it 'raise RuntimeError' do
+                expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!')
+              end
             end
           end
 
-          context 'if method was called' do
-            before { game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
+          describe '#fancy_algo' do
+            before { game.instance_variable_set(:@secret_code, [1, 2, 6, 4]) }
 
-            it 'result may be changed' do
-              expect(game.to_guess('1234')).not_to be_empty
+            context 'guess item was equal secret item in the same position' do
+              let(:guessed_items_sp_1) { game.to_guess('1264') }
+              let(:guessed_items_sp_2) { game.to_guess('1255') }
+              specify { expect(guessed_items_sp_1).to eq('++++') }
+              specify { expect(guessed_items_sp_2).to eq('++  ') }
             end
 
-            it 'result may not be changed' do
-              expect(game.to_guess('6666')).to be_empty
+            context 'guess item was equal secret item in the different position' do
+              let(:guessed_items_dp_1) { game.to_guess('2641') }
+              let(:guessed_items_dp_2) { game.to_guess('2254') }
+              specify { expect(guessed_items_dp_1).to eq('--- ') }
+              specify { expect(guessed_items_dp_2).to eq('-+ +') }
             end
-          end
 
-          context 'when no attempts left' do
-            before { game.instance_variable_set(:@attempts, 0) }
-
-            it 'raise RuntimeError' do
-              expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!')
+            context 'guess item was not equal any secret item' do
+              let(:not_guessed_items) { game.to_guess('3333') }
+              specify { expect(not_guessed_items).to eq('    ') }
             end
           end
         end
@@ -145,25 +166,33 @@ module Codebreaker
         end
 
         describe '#score' do
-          before { game.instance_variable_set(:@configuration, game.configuration.dup) }
-          let(:get_score) do
-              game.instance_variable_set(:@attempts, 0)
-              game.instance_variable_set(:@hints, 0)
-              game.score
+
+          describe 'levels' do
+            before { game.instance_variable_set(:@configuration, game.configuration.dup) }
+            let(:get_score) do
+                game.instance_variable_set(:@attempts, 0)
+                game.instance_variable_set(:@hints, 0)
+                game.score
+              end
+
+            context 'simple' do
+              specify { expect { get_score }.to change { game.score }.from(0).to(50) }
             end
 
-          context 'simple' do
-            specify { expect { get_score }.to change { game.score }.from(0).to(50) }
+            context 'middle' do
+              before { game.configuration.level = :middle }
+              specify { expect { get_score }.to change { game.score }.from(0).to(60) }
+            end
+
+            context 'hard' do
+              before { game.configuration.level = :hard }
+              specify { expect { get_score }.to change { game.score }.from(0).to(190) }
+            end
           end
 
-          context 'middle' do
-            before { game.configuration.level = :middle }
-            specify { expect { get_score }.to change { game.score }.from(0).to(60) }
-          end
-
-          context 'hard' do
-            before { game.configuration.level = :hard }
-            specify { expect { get_score }.to change { game.score }.from(0).to(190) }
+          context 'bonus points' do
+            let(:get_bonus) { game.instance_variable_set(:@result, '++++'); game.score }
+            specify { expect { get_bonus }.to change { game.score }.from(0).to(200) }
           end
         end
       end
