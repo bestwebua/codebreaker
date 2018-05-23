@@ -68,7 +68,7 @@ module Codebreaker
 
         describe '#guess_valid?' do
           it 'accepts string only' do
-            expect(game.guess_valid?(1)).to be(false)
+            expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.')
           end
 
           it 'include digits only' do
