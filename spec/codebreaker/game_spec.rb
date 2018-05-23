@@ -31,7 +31,7 @@ module Codebreaker
           end
 
           it 'haves necessary instance methods' do
-            expect(instance_methods).to eq(%i(attempts attempts= hints hints= level level= player_name player_name=))
+            expect(instance_methods).to eq(%i[attempts attempts= hints hints= level level= player_name player_name=])
           end
         end
 
