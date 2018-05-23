@@ -65,7 +65,7 @@ module Codebreaker
             end
 
             it 'consists digits only' do
-              expect(secret_code.join).to match(/\d+/)
+              expect(secret_code.join).to match(/\A\d+\z/)
             end
           end
         end
