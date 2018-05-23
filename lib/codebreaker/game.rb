@@ -25,7 +25,7 @@ module Codebreaker
       @result == '++++'
     end
 
-    def hint
+    def hint # need to add range current position
       raise 'Oops, no hints left!' if hints.zero?
       @hints -= 1
       @secret_code.sample
