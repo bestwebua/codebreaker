@@ -52,16 +52,20 @@ module Codebreaker
             let(:secret_code) { game.instance_variable_get(:@secret_code) }
             specify { expect(secret_code).to be_an_instance_of(Array) }
 
-            it 'haves secret code' do
+            it 'has secret code' do
               expect(secret_code).not_to be_empty
             end
 
-            it 'haves 4 digits' do
+            it 'has 4 digits' do
               expect(secret_code.size).to eq(4)
             end
 
             it 'consists of digits in range 1..6' do
               expect(secret_code.join).to match(/[1-6]+/)
+            end
+
+            it 'consists digits only' do
+              expect(secret_code.join).to match(/\d+/)
             end
           end
         end
