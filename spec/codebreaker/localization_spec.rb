@@ -36,7 +36,11 @@ module Codebreaker
         end
       end
 
-      
+      describe '#select_application' do
+        context 'should create instance var with app type' do
+          specify { expect(localization.instance_variable_get(:@app_dir)).to eq('game') }
+        end
+      end
     end
 
     describe '#localization' do
