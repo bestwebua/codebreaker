@@ -41,6 +41,12 @@ module Codebreaker
           specify { expect(localization.instance_variable_get(:@app_dir)).to eq('game') }
         end
       end
+
+      describe '#candidates_to_load' do
+        context 'should create instance var with file list' do
+          specify { expect(localization.instance_variable_get(:@ymls_paths)).to be_an_instance_of(Array) }
+        end
+      end
     end
 
     describe '#localization' do
