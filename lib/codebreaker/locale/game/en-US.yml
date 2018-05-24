@@ -1,0 +1,8 @@
+:en:
+  errors:
+    fail_configuration: The configuration is incomplete.
+    invalid_input: Invalid input type.
+    unknown_level: Unknown game level.
+  alerts:
+    no_attempts: Oops, no attempts left!
+    no_hints: Oops, no hints left!

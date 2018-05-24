@@ -1,0 +1,8 @@
+:ru:
+  errors:
+    fail_configuration: Конфигурация не завершена.
+    invalid_input: Недопустимый тип ввода.
+    unknown_level: Неизвестный игровой уровень.
+  alerts:
+    no_attempts: Все доступные попытки исчерпаны!
+    no_hints: К сожалению, больше нет подсказок!
