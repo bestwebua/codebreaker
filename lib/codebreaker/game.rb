@@ -1,5 +1,5 @@
 module Codebreaker
-  GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level)
+  GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level, :lang)
 
   class Game
     BONUS_POINTS, ZERO_POINTS = 200, 0
@@ -7,6 +7,7 @@ module Codebreaker
     attr_reader :attempts, :hints, :configuration
 
     def initialize
+      @locale = Localization.new(:game)
       @configuration ||= GameConfiguration.new
       yield @configuration if block_given?
       apply_configuration
@@ -14,12 +15,12 @@ module Codebreaker
     end
 
     def guess_valid?(input)
-      raise 'Invalid input type.' unless input.is_a?(String)
+      raise message['errors']['invalid_input'] unless input.is_a?(String)
       !!input[/\A[1-6]{4}\z/]
     end
 
     def to_guess(input)
-      raise 'Oops, no attempts left!' if attempts.zero?
+      raise message['alerts']['no_attempts'] if attempts.zero?
       @attempts -= 1
       @result = fancy_algo(input, @secret_code)
     end
@@ -29,7 +30,7 @@ module Codebreaker
     end
 
     def hint # need to add range current position
-      raise 'Oops, no hints left!' if hints.zero?
+      raise message['alerts']['no_hints'] if hints.zero?
       @hints -= 1
       @secret_code.sample
     end
@@ -41,11 +42,16 @@ module Codebreaker
     private
 
     def apply_configuration
-      raise 'The configuration is incomplete.' if configuration.any?(&:nil?)
+      raise message['errors']['fail_configuration'] if configuration.any?(&:nil?)
       configuration.freeze
       @attempts = configuration.max_attempts
       @hints = configuration.max_hints
+      @locale.lang = configuration.lang
       @result = ''
+    end
+
+    def message
+      @locale.localization
     end
 
     def generate_secret_code
@@ -68,7 +74,7 @@ module Codebreaker
         when :simple then [10, 0]
         when :middle then [20, 20]
         when :hard then [50, 30]
-        else raise 'Unknown game level.'
+        else raise message['errors']['unknown_level']
       end
 
       attempt_rate, hint_rate = level_rates
