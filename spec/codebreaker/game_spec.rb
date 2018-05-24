@@ -13,9 +13,7 @@ module Codebreaker
 
     describe '#new' do
       context 'without block' do
-        it 'returns RuntimeError' do
-          expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.')
-        end
+      specify { expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.') }
       end
 
       context 'with block' do
@@ -71,8 +69,10 @@ module Codebreaker
         end
 
         describe '#guess_valid?' do
+          specify {expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.') }
+
           it 'accepts string only' do
-            expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.')
+            expect { game.guess_valid?('1a') }.not_to raise_error
           end
 
           it 'include digits only' do
@@ -102,10 +102,7 @@ module Codebreaker
 
             context 'when no attempts left' do
               before { game.instance_variable_set(:@attempts, 0) }
-
-              it 'raise RuntimeError' do
-                expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!')
-              end
+              specify { expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!') }
             end
           end
 
@@ -162,10 +159,7 @@ module Codebreaker
 
           context 'when no hints left' do
             before { game.instance_variable_set(:@hints, 0) }
-
-            it 'raise RuntimeError' do
-              expect { game.hint }.to raise_error(RuntimeError, 'Oops, no hints left!')
-            end
+            specify { expect { game.hint }.to raise_error(RuntimeError, 'Oops, no hints left!') }
           end
         end
 
