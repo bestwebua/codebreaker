@@ -8,6 +8,7 @@ module Codebreaker
         config.max_attempts = 5
         config.max_hints = 2
         config.level = :simple
+        config.lang = :en
       end
     end
 
@@ -20,7 +21,7 @@ module Codebreaker
         describe '#configuration' do
           let(:instance_methods) { GameConfiguration.instance_methods(all = false) }
 
-          it 'GameConfiguration stuct object' do
+          it 'GameConfiguration struct object' do
             expect(game.configuration).to be_an_instance_of(GameConfiguration)
           end
 
@@ -29,11 +30,15 @@ module Codebreaker
           end
 
           it 'has necessary instance methods' do
-            expect(instance_methods).to include(:player_name, :max_attempts, :max_hints, :level)
+            expect(instance_methods).to include(:player_name, :max_attempts, :max_hints, :level, :lang)
           end
         end
 
         context '#initialize' do
+          describe 'should load localization object into instance var' do
+            specify { expect(game.instance_variable_get(:@locale)).to be_an_instance_of(Localization) }
+          end
+
           describe '#attempts' do
             specify { expect(game.attempts).to eq(5) }
           end
