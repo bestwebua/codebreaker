@@ -25,7 +25,7 @@ module Codebreaker
 
     def candidates_to_load
       app_root = "#{File.expand_path(File.dirname(__FILE__))}"
-      @ymls_paths = Dir.glob("#{app_root}/locale/#{@app_dir.to_s}/*.yml")
+      @ymls_paths = Dir.glob("#{app_root}/locale/#{@app_dir}/*.yml")
     end
 
     def localizations
