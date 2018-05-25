@@ -47,6 +47,12 @@ module Codebreaker
           specify { expect(localization.instance_variable_get(:@ymls_paths)).to be_an_instance_of(Array) }
         end
       end
+
+      describe '#merge_localizations' do
+        context 'should create instance var with localizations' do
+          specify { expect(localization.instance_variable_get(:@localizations)).to be_an_instance_of(Hash) }
+        end
+      end
     end
 
     describe '#localization' do
