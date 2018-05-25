@@ -10,15 +10,11 @@ module Codebreaker
       it 'start game'
     end
 
-    describe '#submit' do
+    describe '#submit_answer' do
       it 'submit guess'
     end
 
-    describe '#invalid_imput' do
-      it 'wrong input'
-    end
-
-    describe '#end_game' do
+    describe '#finish_game' do
       it 'game over'
     end
   end
