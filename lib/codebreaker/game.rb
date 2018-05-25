@@ -2,7 +2,12 @@ module Codebreaker
   GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level, :lang)
 
   class Game
-    BONUS_POINTS, ZERO_POINTS = 200, 0
+    ZERO_POINTS   = 0
+    TEN_POINTS    = 10
+    TWENTY_POINTS = 20
+    THIRTY_POINTS = 30
+    FIFTY_POINTS  = 50
+    BONUS_POINTS  = 200
 
     attr_reader :attempts, :hints, :configuration
 
@@ -71,9 +76,9 @@ module Codebreaker
 
     def calculate_score
       level_rates = case configuration.level
-        when :simple then [10, 0]
-        when :middle then [20, 20]
-        when :hard then [50, 30]
+        when :simple then [TEN_POINTS, ZERO_POINTS]
+        when :middle then [TWENTY_POINTS, TWENTY_POINTS]
+        when :hard   then [FIFTY_POINTS, THIRTY_POINTS]
         else raise message['errors']['unknown_level']
       end
 
