@@ -4,5 +4,6 @@
     invalid_input: Invalid input type.
     unknown_level: Unknown game level.
   alerts:
+    invalid_input: Answer should equal 4 digits in range from 1 to 6!
     no_attempts: Oops, no attempts left!
     no_hints: Oops, no hints left!
