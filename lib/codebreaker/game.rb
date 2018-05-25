@@ -21,7 +21,8 @@ module Codebreaker
 
     def guess_valid?(input)
       raise message['errors']['invalid_input'] unless input.is_a?(String)
-      !!input[/\A[1-6]{4}\z/]
+      raise message['alerts']['invalid_input'] unless input[/\A[1-6]{4}\z/]
+      true
     end
 
     def to_guess(input)
