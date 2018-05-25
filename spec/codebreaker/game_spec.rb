@@ -153,10 +153,21 @@ module Codebreaker
           end
 
           context 'when hint was called' do
-            let(:secret_code) { game.instance_variable_get(:@secret_code) }
+            context 'if nothing guessed before call' do
+              let(:secret_code) { game.instance_variable_get(:@secret_code) }
+              it 'returns one of 4 secret digits' do
+                expect(secret_code).to include(game.hint)
+              end
+            end
 
-            it 'returns one of 4 secret digits' do
-              expect(secret_code).to include(game.hint)
+            context 'when something guessed' do
+              before do
+                game.instance_variable_set(:@secret_code, [1, 2, 3, 4])
+                game.instance_variable_set(:@result, '+++ ')
+              end
+              it 'should return one of not guessed numbers' do
+                expect(game.hint).to eq(4)
+              end
             end
           end
 
