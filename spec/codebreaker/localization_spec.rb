@@ -2,7 +2,9 @@ require 'spec_helper'
 
 module Codebreaker
   RSpec.describe Localization do
-    let(:localization) { Localization.new(:game) }
+
+    let(:localization)       { Localization.new(:game) }
+    let(:localization_wrong) { Localization.new(:console, :eg) }
 
     describe '#new' do
       describe '#initialize' do
@@ -29,8 +31,7 @@ module Codebreaker
             end
 
             context 'when wrong lang' do
-              let(:local_wrong_lang) { Localization.new(:console, :eg) }
-              specify { expect(local_wrong_lang).to be_an_instance_of(Localization) }
+              specify { expect(localization_wrong).to be_an_instance_of(Localization) }
             end
           end
         end
@@ -56,7 +57,9 @@ module Codebreaker
     end
 
     describe '#localization' do
-      it 'localization selector'
+      context 'return default localization if no localization found' do
+        specify { expect(localization_wrong.localization.first).eq have_key(:en) }
+      end
     end
   end
 end
