@@ -74,14 +74,12 @@ module Codebreaker
         end
 
         describe '#guess_valid?' do
-          specify {expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.') }
-
           it 'accepts string only' do
-            expect { game.guess_valid?('1a') }.not_to raise_error
+            expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.')
           end
 
           it 'include digits only' do
-            expect(game.guess_valid?('1a')).to be(false)
+            expect { game.guess_valid?('1a') }.to raise_error(RuntimeError, 'Answer should equal 4 digits in range from 1 to 6!')
           end
 
           it 'consists of 4 digis in range 1..6' do
