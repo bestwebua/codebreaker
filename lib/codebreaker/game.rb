@@ -2,12 +2,13 @@ module Codebreaker
   GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level, :lang)
 
   class Game
-    ZERO_POINTS   = 0
-    TEN_POINTS    = 10
+    ZERO_POINTS = 0
+    TEN_POINTS = 10
     TWENTY_POINTS = 20
     THIRTY_POINTS = 30
-    FIFTY_POINTS  = 50
-    BONUS_POINTS  = 200
+    FIFTY_POINTS = 50
+    BONUS_POINTS = 200
+    RIGHT_ANSWER = '+'
 
     attr_reader :attempts, :hints, :configuration
 
@@ -32,13 +33,17 @@ module Codebreaker
     end
 
     def won?
-      @result == '++++'
+      @result == RIGHT_ANSWER * 4
     end
 
-    def hint # need to add range current position
+    def hint
       raise message['alerts']['no_hints'] if hints.zero?
       @hints -= 1
-      @secret_code.sample
+      return @secret_code.sample if @result.empty?
+      not_guessed = @result.chars.map.with_index do |item, index|
+        @secret_code[index] unless item == RIGHT_ANSWER
+      end
+      not_guessed.compact.sample
     end
 
     def score
