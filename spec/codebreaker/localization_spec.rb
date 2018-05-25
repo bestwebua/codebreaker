@@ -75,5 +75,15 @@ module Codebreaker
         end
       end
     end
+
+    describe '#lang' do
+      context 'when language was not passed' do
+        specify { expect(localization.lang).to eq(:en) }
+      end
+
+      context 'can be changed' do
+        specify { expect(localization.lang = :ru).to eq(:ru) }
+      end
+    end
   end
 end
