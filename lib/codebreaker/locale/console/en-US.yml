@@ -1,0 +1,15 @@
+:en:
+  errors:
+    
+  alerts:
+    welcome: ....Codebreaker Console Game....
+    hint_info: Use '-h' for help.
+    hint: Hint
+    guess: Enter your guess
+    motivation: Come on, step on it!
+    win: You won!
+    lose: You lost(
+    yes_or_no:
+    save_game: Do you whant to save your score?
+    new_game: Do you whant to play again?
+    shutdown: Exit...
