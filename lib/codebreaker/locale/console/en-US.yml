@@ -1,6 +1,6 @@
 :en:
   errors:
-    
+    wrong_object: Wrong object type!
   alerts:
     welcome: ....Codebreaker Console Game....
     hint_info: Use '-h' for help.
