@@ -9,6 +9,8 @@ module Codebreaker
     FIFTY_POINTS = 50
     BONUS_POINTS = 200
     RIGHT_ANSWER = '+'
+    RIGHT_ANSWER_DIFF_INDEX = '-'
+    WRONG_ANSWER = ' '
 
     attr_reader :attempts, :hints, :configuration
 
@@ -72,9 +74,9 @@ module Codebreaker
     def fancy_algo(guess, secret_code)
       result = guess.chars.map(&:to_i).map.with_index do |item, index|
         case
-          when item == secret_code[index] then '+'
-          when secret_code[index..-1].include?(item) then '-'
-          else ' '
+          when item == secret_code[index] then RIGHT_ANSWER
+          when secret_code[index..-1].include?(item) then RIGHT_ANSWER_DIFF_INDEX
+          else WRONG_ANSWER
         end
       end
       result.join
