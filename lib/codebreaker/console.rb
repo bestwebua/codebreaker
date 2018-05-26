@@ -7,10 +7,8 @@ module Codebreaker
     attr_reader :game
 
     def initialize(game)
-      raise ArgumentError, 'Wrong object type!' unless game.is_a?(Game)
-      @game = game
-      @game_config_snapshot = game.configuration.clone
-      @locale = Localization.new(:console, game.configuration.lang)
+      @locale = Localization.new(:console)
+      load_console(game)   
     end
 
     def start_game
@@ -20,6 +18,13 @@ module Codebreaker
     end
 
     private
+
+    def load_console(game)
+      raise ArgumentError, message['errors']['wrong_object'] unless game.is_a?(Game)
+      @game = game
+      @locale.lang = game.configuration.lang
+      @game_config_snapshot = game.configuration.clone
+    end
 
     def message
       @locale.localization
