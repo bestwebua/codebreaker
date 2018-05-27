@@ -31,7 +31,7 @@ module Codebreaker
     end
 
     def submit_answer
-      process(input_script)
+      process(user_interaction)
     end
 
     def show_hint
@@ -42,7 +42,7 @@ module Codebreaker
       end
     end
 
-    def input_script
+    def user_interaction
       unless game.attempts.zero?
         input, status, step = '', false, 0
         until status
