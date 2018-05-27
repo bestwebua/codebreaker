@@ -95,7 +95,7 @@ module Codebreaker
 
     def save_game
       print message['alerts']['save_game']
-      'save game' if input_selector
+      save_game_data if input_selector
     end
 
     def new_game
@@ -107,6 +107,10 @@ module Codebreaker
         puts message['alerts']['shutdown']
         exit
       end
+    end
+
+    def save_game_data
+      
     end
 
     def load_new_game
