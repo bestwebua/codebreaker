@@ -17,7 +17,7 @@ module Codebreaker
       submit_answer
     end
 
-    private
+    #private
 
     def load_console(game)
       raise ArgumentError, message['errors']['wrong_object'] unless game.is_a?(Game)
@@ -98,6 +98,14 @@ module Codebreaker
       save_game_data if input_selector
     end
 
+    def save_game_data
+      file = "#{File.expand_path(File.dirname(__FILE__))}/data/users_scores.txt"
+      File.open(file, 'a+') do |data|
+        data.puts "#{Time.now.strftime('%Y%m%d-%H%M%S')}: #{game.print_achievements}"
+      end
+      puts message['info']['successfully_saved'].green
+    end
+
     def new_game
       print message['alerts']['new_game']
       if input_selector
@@ -107,10 +115,6 @@ module Codebreaker
         puts message['alerts']['shutdown']
         exit
       end
-    end
-
-    def save_game_data
-      
     end
 
     def load_new_game

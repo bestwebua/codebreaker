@@ -13,3 +13,5 @@
     save_game: Do you whant to save your score?
     new_game: Do you whant to play again?
     shutdown: Exit...
+  info:
+    successfully_saved: Current game data was successfully saved.
