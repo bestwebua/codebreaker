@@ -17,7 +17,7 @@ module Codebreaker
       submit_answer
     end
 
-    #private
+    private
 
     def load_console(game)
       raise ArgumentError, message['errors']['wrong_object'] unless game.is_a?(Game)
