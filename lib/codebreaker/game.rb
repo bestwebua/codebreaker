@@ -7,9 +7,9 @@ module Codebreaker
     ZERO_POINTS = 0
     TEN_POINTS = 10
     TWENTY_POINTS = 20
-    THIRTY_POINTS = 30
     FIFTY_POINTS = 50
-    BONUS_POINTS = 200
+    ONE_HUNDRED_POINTS = 100
+    BONUS_POINTS = 500
     RIGHT_ANSWER = '+'
     RIGHT_ANSWER_DIFF_INDEX = '-'
     WRONG_ANSWER = ' '
@@ -93,12 +93,18 @@ module Codebreaker
       level_rates = case configuration.level
         when :simple then [TEN_POINTS, ZERO_POINTS]
         when :middle then [TWENTY_POINTS, TWENTY_POINTS]
-        when :hard   then [FIFTY_POINTS, THIRTY_POINTS]
+        when :hard   then [FIFTY_POINTS, ONE_HUNDRED_POINTS]
         else raise message['errors']['unknown_level']
       end
 
       attempt_rate, hint_rate = level_rates
-      used_attempts = configuration.max_attempts - attempts
+
+      used_attempts = if @result.include?(RIGHT_ANSWER)
+        configuration.max_attempts - attempts
+      else
+        ZERO_POINTS
+      end
+
       used_hints = configuration.max_hints - hints
       bonus_points = won? ? BONUS_POINTS : ZERO_POINTS
 

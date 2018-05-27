@@ -186,18 +186,37 @@ module Codebreaker
               game.score
             end
 
-            context 'simple' do
-              specify { expect { get_score }.to change { game.score }.from(0).to(50) }
+            describe 'nothing guessed' do
+              context 'simple' do
+                specify { expect(get_score).to be_zero }
+              end
+
+              context 'middle' do
+                before { game.configuration.level = :middle }
+                specify { expect(get_score).to eq(-40) }
+              end
+
+              context 'hard' do
+                before { game.configuration.level = :hard }
+                specify { expect(get_score).to eq(-200) }
+              end
             end
 
-            context 'middle' do
-              before { game.configuration.level = :middle }
-              specify { expect { get_score }.to change { game.score }.from(0).to(60) }
-            end
+            describe 'one more guessed' do
+              before { game.instance_variable_set(:@result, '+   ') }
+              context 'simple' do
+                specify { expect { get_score }.to change { game.score }.from(0).to(50) }
+              end
 
-            context 'hard' do
-              before { game.configuration.level = :hard }
-              specify { expect { get_score }.to change { game.score }.from(0).to(190) }
+              context 'middle' do
+                before { game.configuration.level = :middle }
+                specify { expect { get_score }.to change { game.score }.from(0).to(60) }
+              end
+
+              context 'hard' do
+                before { game.configuration.level = :hard }
+                specify { expect { get_score }.to change { game.score }.from(0).to(50) }
+              end
             end
 
             context 'unknown' do
@@ -208,7 +227,7 @@ module Codebreaker
 
           context 'bonus points' do
             let(:get_bonus) { game.instance_variable_set(:@result, '++++'); game.score }
-            specify { expect { get_bonus }.to change { game.score }.from(0).to(200) }
+            specify { expect { get_bonus }.to change { game.score }.from(0).to(500) }
           end
         end
 
@@ -219,7 +238,7 @@ module Codebreaker
 
           context 'when won' do
             before { game.instance_variable_set(:@result, '++++') }
-            specify { expect(game.print_achievements).to eq("User 'Mike' won the game on 'simple' level with total score 200 points.") }
+            specify { expect(game.print_achievements).to eq("User 'Mike' won the game on 'simple' level with total score 500 points.") }
           end
         end
       end
