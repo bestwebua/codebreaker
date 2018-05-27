@@ -7,3 +7,7 @@
     invalid_input: Answer should equal 4 digits in range from 1 to 6!
     no_attempts: Oops, no attempts left!
     no_hints: Oops, no hints left!
+  info:
+    won: won
+    lost: lost
+    user_achievements: User '<%= configuration.player_name %>' <%= status %> the game on '<%= configuration.level %>' level with total score <%= score %> points.
