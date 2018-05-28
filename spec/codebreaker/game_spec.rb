@@ -200,9 +200,14 @@ module Codebreaker
                 before { game.configuration.level = :hard }
                 specify { expect(get_score).to eq(-200) }
               end
+
+              context 'unknown' do
+                before { game.configuration.level = :unknown }
+                specify { expect { get_score }.to raise_error(RuntimeError, 'Unknown game level.') }
+              end
             end
 
-            describe 'one more guessed' do
+            describe 'one or more guessed' do
               before { game.instance_variable_set(:@result, '+   ') }
               context 'simple' do
                 specify { expect { get_score }.to change { game.score }.from(0).to(50) }
@@ -218,16 +223,20 @@ module Codebreaker
                 specify { expect { get_score }.to change { game.score }.from(0).to(50) }
               end
             end
-
-            context 'unknown' do
-              before { game.configuration.level = :unknown }
-              specify { expect { get_score }.to raise_error(RuntimeError, 'Unknown game level.') }
-            end
           end
 
-          context 'bonus points' do
-            let(:get_bonus) { game.instance_variable_set(:@result, '++++'); game.score }
-            specify { expect { get_bonus }.to change { game.score }.from(0).to(500) }
+          describe 'bonus points' do
+            before { game.instance_variable_set(:@result, '++++') }
+
+            context 'when guessed from first attempt' do
+              let(:from_first_attempt) { game.instance_variable_set(:@attempts, 4); game.score }
+              specify { expect { from_first_attempt }.to change { game.score }.from(0).to(540) }
+            end
+
+            context 'when guessed and have used more then one attempts' do
+              let(:from_n_attempts) { game.instance_variable_set(:@attempts, 3); game.score }
+              specify { expect { from_n_attempts }.to change { game.score }.from(0).to(80) }
+            end
           end
         end
 
@@ -237,8 +246,11 @@ module Codebreaker
           end
 
           context 'when won' do
-            before { game.instance_variable_set(:@result, '++++') }
-            specify { expect(game.print_achievements).to eq("User 'Mike' won the game on 'simple' level with total score 500 points.") }
+            before do
+              game.instance_variable_set(:@attempts, 0)
+              game.instance_variable_set(:@result, '++++')
+            end
+            specify { expect(game.print_achievements).to eq("User 'Mike' won the game on 'simple' level with total score 200 points.") }
           end
         end
       end

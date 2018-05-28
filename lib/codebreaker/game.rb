@@ -98,17 +98,13 @@ module Codebreaker
       end
 
       attempt_rate, hint_rate = level_rates
+      guessed = @result.count(RIGHT_ANSWER)
 
-      used_attempts = if @result.include?(RIGHT_ANSWER)
-        configuration.max_attempts - attempts
-      else
-        ZERO_POINTS
-      end
-
+      used_attempts = configuration.max_attempts - attempts
       used_hints = configuration.max_hints - hints
-      bonus_points = won? ? BONUS_POINTS : ZERO_POINTS
+      bonus_points = won? && used_attempts == 1 ? BONUS_POINTS : ZERO_POINTS
 
-      used_attempts*attempt_rate - used_hints*hint_rate + bonus_points
+      used_attempts * attempt_rate * guessed - used_hints * hint_rate + bonus_points
     end
   end
 end
