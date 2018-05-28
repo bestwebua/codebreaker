@@ -19,12 +19,11 @@ Or install it yourself as:
     $ gem install codebreaker2018
 
 ## Usage
-
 This gem has 2 localizations: english & russian. Keep in mind, language wich used in game configuration will be used in game console interface too. You can expand the gem localizations, just add your own .yml language file into 'lib/codebreaker/locale' folder.
 
 Game features:
   - Configurator:
-    - Player name
+    - Player's name
     - Max attempts and hints: integers only
     - Levels: :simple, :middle, :hard
     - Languages: :en, :ru
@@ -34,6 +33,11 @@ Console features:
   - Color interface
   - Ability to save results
   - Ability to play again
+
+Localization features:
+  - Autoload localizations from locale dir
+  - Default language
+  - Ability to change locale
 
 If you not configure your config.lang or use nonexistent localization will be used english language by the default.
 The sample of usage:
