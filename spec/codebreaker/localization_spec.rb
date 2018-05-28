@@ -3,6 +3,30 @@ require 'spec_helper'
 module Codebreaker
   RSpec.describe Localization do
 
+    before(:context) do
+      copied_dirs, dirname_pattern = [], /.+\/(.+)\z/
+
+      locales_dir = "#{File.expand_path('../../lib/codebreaker/locale', File.dirname(__FILE__))}"
+      test_locales_dir = "#{File.expand_path('./test_locale/.', File.dirname(__FILE__))}"
+      
+      Dir.glob("#{test_locales_dir}/*").each do |dir|
+        FileUtils.cp_r(dir, locales_dir)
+        copied_dirs << dir
+      end
+
+      copied_dirs.map! { |dir| dir[/#{dirname_pattern}/,1]  }
+
+      @dirs_to_del = Dir.glob("#{locales_dir}/*").select do |file|
+        copied_dirs.include?(file[/#{dirname_pattern}/,1])
+      end
+    end
+
+    after(:context) do
+      @dirs_to_del.each do |dir|
+        FileUtils.remove_dir(dir)
+      end
+    end
+
     let(:localization)       { Localization.new(:game) }
     let(:localization_wrong) { Localization.new(:game, :eg) }
 
