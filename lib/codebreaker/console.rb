@@ -2,6 +2,7 @@ require 'colorize'
 
 module Codebreaker
   class Console
+    HINT = '-h'
     YES = 'y'
 
     attr_reader :game
@@ -50,11 +51,11 @@ module Codebreaker
             game.guess_valid?(input)
             status = true
           rescue => error
-            puts error.to_s.red unless step.zero? || input == '-h'
+            puts error.to_s.red unless step.zero? || input == HINT
             puts "#{message['alerts']['guess']}:"
             input = gets.chomp
             step += 1
-            show_hint if input == '-h'
+            show_hint if input == HINT
           end
         end
         input
