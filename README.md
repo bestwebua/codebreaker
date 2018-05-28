@@ -20,7 +20,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem has 2 localizations: english & russian. Keep in mind, language wich used in game configuration will be used in game console interface too. You can expand the gem localizations, just add your own .yml language file into 'lib/codebreaker/locale' folder.
+
+Game features:
+  - Configurator:
+    - Player name
+    - Max attempts and hints: integers only
+    - Levels: :simple, :middle, :hard
+    - Languages: :en, :ru
+
+Console features:
+  - Autoloading localization by game language
+  - Color interface
+  - Ability to save results
+  - Ability to play again
+
+If you not configure your config.lang or use nonexistent localization will be used english language by the default.
+The sample of usage:
+
+```ruby
+# Init Game instance
+game = Codebreaker::Game.new do |config|
+  config.player_name = 'Mike'
+  config.max_attempts = 5
+  config.max_hints = 2
+  config.level = :middle
+  config.lang = :en
+end
+
+# Init Console instance with game
+console = Codebreaker::Console.new(game)
+
+# Let's play!
+console.start_game
+```
 
 ## Development
 
@@ -36,4 +69,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/bestwe
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
