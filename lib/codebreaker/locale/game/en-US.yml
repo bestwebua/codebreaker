@@ -1,6 +1,7 @@
 :en:
   errors:
     fail_configuration: The configuration is incomplete.
+    fail_configuration_values: Max_attempts must be more then zero, max_hints must be positive.
     invalid_input: Invalid input type.
     unknown_level: Unknown game level.
   alerts:
