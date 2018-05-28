@@ -22,6 +22,10 @@ module Codebreaker
       File.expand_path('./locale/.', File.dirname(__FILE__))
     end
 
+    def authorized_apps
+      Dir.entries(localizations_dir).reject { |dir_name| dir_name.include?('.') }.map(&:to_sym)
+    end
+
     def select_application(app_type)
       raise 'Unknown application type.' unless authorized_apps.include?(app_type)
       @app_dir = app_type.to_s
