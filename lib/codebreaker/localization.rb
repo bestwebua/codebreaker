@@ -19,7 +19,7 @@ module Codebreaker
     private
 
     def select_application(app_type)
-      raise 'Unknown application type.' unless %i[console game].include?(app_type)
+      raise 'Unknown application type.' unless authorized_apps.include?(app_type)
       @app_dir = app_type.to_s
     end
 
