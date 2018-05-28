@@ -27,8 +27,8 @@ module Codebreaker
       end
     end
 
-    let(:localization)       { Localization.new(:game) }
-    let(:localization_wrong) { Localization.new(:game, :eg) }
+    let(:localization)       { Localization.new(:test_app) }
+    let(:localization_wrong) { Localization.new(:test_app, :eg) }
 
     describe '#new' do
       describe '#initialize' do
@@ -63,7 +63,7 @@ module Codebreaker
 
       describe '#select_application' do
         context 'should create instance var with app type' do
-          specify { expect(localization.instance_variable_get(:@app_dir)).to eq('game') }
+          specify { expect(localization.instance_variable_get(:@app_dir)).to eq('test_app') }
         end
       end
 
@@ -91,7 +91,7 @@ module Codebreaker
       end
 
       context 'return the requested localization if found' do
-        let(:localization_ru)        { Localization.new(:game, :ru) }
+        let(:localization_ru)        { Localization.new(:test_app, :ru) }
         let(:requested_localization) { localization_ru.instance_variable_get(:@localizations)[:ru] }
 
         it 'should equal requested localization' do
