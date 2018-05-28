@@ -109,5 +109,16 @@ module Codebreaker
         specify { expect(localization.lang = :ru).to eq(:ru) }
       end
     end
+
+    describe 'test_app localization' do
+      context 'English' do
+        specify { expect(localization.localization['info']).to eq('English localization of test app.') }
+      end
+
+      context 'Russian' do
+        before { localization.lang = :ru }
+        specify { expect(localization.localization['info']).to eq('Русская локализация тестового приложения.') }
+      end
+    end
   end
 end
