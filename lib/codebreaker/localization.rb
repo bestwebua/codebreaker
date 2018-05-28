@@ -18,6 +18,10 @@ module Codebreaker
 
     private
 
+    def localizations_dir
+      File.expand_path('./locale/.', File.dirname(__FILE__))
+    end
+
     def select_application(app_type)
       raise 'Unknown application type.' unless authorized_apps.include?(app_type)
       @app_dir = app_type.to_s
