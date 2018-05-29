@@ -20,6 +20,11 @@ module Codebreaker
       submit_answer
     end
 
+    def erase_scores
+      print message['alerts']['erase_scores']
+      erase_game_data if input_selector
+    end
+
     private
 
     def load_console(game)
@@ -151,11 +156,6 @@ module Codebreaker
           config[key] = value
         end
       end
-    end
-
-    def erase_scores
-      print message['alerts']['erase_scores']
-      erase_game_data if input_selector
     end
 
     def erase_game_data
