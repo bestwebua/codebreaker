@@ -13,6 +13,7 @@ module Codebreaker
     def initialize(game = DEMO)
       @locale = Localization.new(:console)
       load_console(game)
+      start_game if game == DEMO
     end
 
     def start_game
