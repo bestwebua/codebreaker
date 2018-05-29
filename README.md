@@ -64,14 +64,22 @@ game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
 # Init Console instance with game
 console = Codebreaker::Console.new(game)
 
+# Interactive methods
 # Let's play!
 console.start_game
 
-# Get all game statistic
-console.scores
-
 # Erase all game statistic
 console.erase_scores
+
+# Static methods
+# Able to view current game instance into console
+console.game
+
+# Able to view path to yml-file
+console.storage_path
+
+# Able to view all game statistic
+console.scores
 ```
 
 ## Development
