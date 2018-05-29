@@ -13,11 +13,30 @@ module Codebreaker
     end
 
     describe '#new' do
-      context 'without block' do
-      specify { expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.') }
+      context 'without block or params' do
+        specify { expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.') }
       end
 
-      context 'with block' do
+      context 'with block or params' do
+        describe 'with wrong params' do
+          error = 'Max_attempts must be more then zero, max_hints must be positive.'
+          
+          context 'when max_attempts, max_hints not integers' do
+            let(:not_integers) { Game.new('Mike', '5', '2', :simple, :end) }
+            specify { expect { not_integers }.to raise_error(RuntimeError, error) }
+          end
+
+          context 'when max_attempts < 1' do
+            let(:max_attempts) { Game.new('Mike', 0, 2, :simple, :end) }
+            specify { expect { max_attempts }.to raise_error(RuntimeError, error) }
+          end
+
+          context 'when max_hints negative' do
+            let(:max_hints) { Game.new('Mike', 1, -1, :simple, :end) }
+            specify { expect { max_hints }.to raise_error(RuntimeError, error) }
+          end
+        end
+
         describe '#configuration' do
           let(:instance_methods) { GameConfiguration.instance_methods(all = false) }
 
