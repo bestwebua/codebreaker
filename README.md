@@ -61,8 +61,11 @@ end
 # Alternative init Game instance with args
 game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
 
-# Init Console instance with game
+# Init Console instance with your game
 console = Codebreaker::Console.new(game)
+
+# Also you can autoload demo game instance. Just create console insatnce without argument
+Codebreaker::Console.new
 
 # Interactive methods
 # Let's play!
