@@ -1,12 +1,13 @@
 require 'colorize'
 require 'erb'
+require 'yaml'
 
 module Codebreaker
   class Console
     HINT = '-h'
     YES = 'y'
 
-    attr_reader :game
+    attr_reader :game, :storage_path, :scores
 
     def initialize(game)
       @locale = Localization.new(:console)
@@ -26,6 +27,12 @@ module Codebreaker
       @game = game
       @locale.lang = game.configuration.lang
       @game_config_snapshot = game.configuration.clone
+      @storage_path = File.expand_path('./data/scores.yml', File.dirname(__FILE__))
+      @scores = load_scores
+    end
+
+    def load_scores
+      YAML.load(File.open(storage_path, 'r')) rescue []
     end
 
     def message
