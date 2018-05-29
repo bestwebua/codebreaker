@@ -23,6 +23,7 @@ module Codebreaker
     def erase_scores
       print message['alerts']['erase_scores']
       erase_game_data if input_selector
+      exit
     end
 
     private
