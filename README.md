@@ -39,12 +39,10 @@ This gem has 2 localizations: english & russian. Keep in mind, language wich use
   - Default language
   - Ability to change locale
 
-If you not configure your config.lang or use nonexistent localization will be used english language by the default.
-
 The sample of usage:
 
 ```ruby
-# Init Game instance
+# Init Game instance with block
 game = Codebreaker::Game.new do |config|
   config.player_name = 'Mike'
   config.max_attempts = 5
@@ -52,6 +50,9 @@ game = Codebreaker::Game.new do |config|
   config.level = :middle
   config.lang = :en
 end
+
+# Alternative init Game instance with args
+# game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
 
 # Init Console instance with game
 console = Codebreaker::Console.new(game)
