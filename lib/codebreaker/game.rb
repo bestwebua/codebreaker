@@ -16,9 +16,9 @@ module Codebreaker
 
     attr_reader :attempts, :hints, :configuration
 
-    def initialize
+    def initialize(*config)
       @locale = Localization.new(:game)
-      @configuration ||= GameConfiguration.new
+      @configuration ||= GameConfiguration.new(*config)
       yield @configuration if block_given?
       apply_configuration
       generate_secret_code
