@@ -152,5 +152,10 @@ module Codebreaker
         end
       end
     end
+
+    def erase_scores
+      print message['alerts']['erase_scores']
+      erase_game_data if input_selector
+    end
   end
 end
