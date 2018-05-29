@@ -28,10 +28,10 @@ module Codebreaker
       @locale.lang = game.configuration.lang
       @game_config_snapshot = game.configuration.clone
       @storage_path = File.expand_path('./data/scores.yml', File.dirname(__FILE__))
-      @scores = load_scores
+      @scores = load_game_data
     end
 
-    def load_scores
+    def load_game_data
       YAML.load(File.open(storage_path, 'r')) rescue []
     end
 
