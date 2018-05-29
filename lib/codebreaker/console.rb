@@ -109,10 +109,8 @@ module Codebreaker
     end
 
     def save_game_data
-      file = "#{File.expand_path(File.dirname(__FILE__))}/data/users_scores.txt"
-      File.open(file, 'a+') do |data|
-        data.puts "#{Time.now.strftime('%Y%m%d-%H%M%S')}: #{game.print_achievements}"
-      end
+      save_user_score
+      save_to_yml
       puts message['info']['successfully_saved'].green
     end
 
