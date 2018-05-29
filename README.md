@@ -1,8 +1,8 @@
-# Codebreaker
+# Codebreaker #
 
 Codebreaker is a logic game in which the code-breaker tries to break a secret code created by a code-maker. The code-maker, which will be played by the application we’re going to write, creates a secret code of four numbers between 1 and 6.
 
-## Installation
+## Installation ##
 
 Add this line to your application's Gemfile:
 
@@ -18,28 +18,29 @@ Or install it yourself as:
 
     $ gem install codebreaker2018
 
-## Usage
+## Usage ##
 This gem has 2 localizations: english & russian. Keep in mind, language wich used in game configuration will be used in game console interface too. You can expand the gem localizations, just add your own .yml language file into 'lib/codebreaker/locale' folder.
 
-Game features:
+### Game features ###
   - Configurator:
     - Player's name
     - Max attempts and hints: integers only
     - Levels: :simple, :middle, :hard
     - Languages: :en, :ru
 
-Console features:
+### Console features ###
   - Autoloading localization by game language
   - Color interface
   - Ability to save results
   - Ability to play again
 
-Localization features:
+### Localization features ###
   - Autoload localizations from locale dir
   - Default language
   - Ability to change locale
 
 If you not configure your config.lang or use nonexistent localization will be used english language by the default.
+
 The sample of usage:
 
 ```ruby
