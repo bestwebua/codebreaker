@@ -4,14 +4,15 @@ require 'yaml'
 
 module Codebreaker
   class Console
+    DEMO = Game.new('Demo User', 5, 2, :middle, :en)
     HINT = '-h'
     YES = 'y'
 
     attr_reader :game, :storage_path, :scores
 
-    def initialize(game)
+    def initialize(game = DEMO)
       @locale = Localization.new(:console)
-      load_console(game)   
+      load_console(game)
     end
 
     def start_game
@@ -25,6 +26,8 @@ module Codebreaker
       erase_game_data if input_selector
       exit
     end
+
+    private_constant :DEMO
 
     private
 
