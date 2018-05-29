@@ -7,11 +7,12 @@
     hint: Hint
     guess: Enter your guess
     motivation: Come on, step on it!
-    win: You won!
+    won: You won!
     lose: You lost(
     yes_or_no:
     save_game: Do you whant to save your score?
     new_game: Do you whant to play again?
     shutdown: Exit...
   info:
+    results: <%= summary %> With total score <%= game.score %> points.
     successfully_saved: Current game data was successfully saved.
