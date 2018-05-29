@@ -1,4 +1,5 @@
 require 'colorize'
+require 'erb'
 
 module Codebreaker
   class Console
@@ -80,7 +81,8 @@ module Codebreaker
     end
 
     def finish_game
-      puts game.won? ? message['alerts']['win'].green : message['alerts']['lose'].red
+      summary = game.won? ? message['alerts']['won'].green : message['alerts']['lose'].red
+      puts ERB.new(message['info']['results']).result(binding)
       save_game
       new_game
     end
