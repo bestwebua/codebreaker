@@ -157,5 +157,15 @@ module Codebreaker
       print message['alerts']['erase_scores']
       erase_game_data if input_selector
     end
+
+    def erase_game_data
+      begin
+        File.delete(storage_path)
+        scores.clear
+        puts message['info']['successfully_erased'].green
+      rescue
+        puts message['errors']['file_not_found'].red
+      end
+    end
   end
 end
