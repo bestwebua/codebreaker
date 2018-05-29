@@ -128,6 +128,12 @@ module Codebreaker
       end
     end
 
+    def save_to_yml
+      File.open(storage_path, 'w') do |file|
+        file.write(YAML.dump(scores))
+      end
+    end
+
     def new_game
       print message['alerts']['new_game']
       if input_selector
