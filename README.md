@@ -39,7 +39,14 @@ This gem has 2 localizations: english & russian. Keep in mind, language wich use
   - Default language
   - Ability to change locale
 
-The sample of usage:
+### Score features ###
+  - Date
+  - Player's name
+  - Winner or not
+  - Level
+  - Score
+
+The sample of Codebreaker usage:
 
 ```ruby
 # Init Game instance with block
@@ -52,13 +59,19 @@ game = Codebreaker::Game.new do |config|
 end
 
 # Alternative init Game instance with args
-# game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
+game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
 
 # Init Console instance with game
 console = Codebreaker::Console.new(game)
 
 # Let's play!
 console.start_game
+
+# Get all game statistic
+console.scores
+
+# Erase all game statistic
+console.erase_scores
 ```
 
 ## Development
