@@ -114,6 +114,10 @@ module Codebreaker
       puts message['info']['successfully_saved'].green
     end
 
+    def save_user_score
+      scores << current_user_score
+    end
+
     def new_game
       print message['alerts']['new_game']
       if input_selector
