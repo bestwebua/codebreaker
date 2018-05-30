@@ -78,16 +78,8 @@ module Codebreaker
               expect(secret_code).not_to be_empty
             end
 
-            it 'has 4 digits' do
-              expect(secret_code.size).to eq(4)
-            end
-
-            it 'consists of digits in range 1..6' do
-              expect(secret_code.join).to match(/[1-6]+/)
-            end
-
-            it 'consists digits only' do
-              expect(secret_code.join).to match(/\A\d+\z/)
+            it 'consists only 4 digits in range 1..6' do
+              expect(secret_code.join).to match(/\A[1-6]{4}\z/)
             end
           end
         end
