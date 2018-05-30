@@ -10,9 +10,9 @@ module Codebreaker
     FIFTY_POINTS = 50
     ONE_HUNDRED_POINTS = 100
     BONUS_POINTS = 500
-    RIGHT_ANSWER = '+'
-    RIGHT_ANSWER_DIFF_INDEX = '-'
-    WRONG_ANSWER = ' '
+    RIGHT_ANSWER = '+'.freeze
+    RIGHT_ANSWER_DIFF_INDEX = '-'.freeze
+    WRONG_ANSWER = ' '.freeze
 
     attr_reader :attempts, :hints, :configuration
 
@@ -33,19 +33,19 @@ module Codebreaker
     def to_guess(input)
       raise message['alerts']['no_attempts'] if attempts.zero?
       @attempts -= 1
-      @result = fancy_algo(input, @secret_code)
+      @result = fancy_algo(input, secret_code)
     end
 
     def won?
-      @result == RIGHT_ANSWER * 4
+      result == RIGHT_ANSWER * 4
     end
 
     def hint
       raise message['alerts']['no_hints'] if hints.zero?
       @hints -= 1
-      return @secret_code.sample if @result.empty?
-      not_guessed = @result.chars.map.with_index do |item, index|
-        @secret_code[index] unless item == RIGHT_ANSWER
+      return secret_code.sample if result.empty?
+      not_guessed = result.chars.map.with_index do |item, index|
+        secret_code[index] unless item == RIGHT_ANSWER
       end
       not_guessed.compact.sample
     end
@@ -75,6 +75,10 @@ module Codebreaker
       @result = ''
     end
 
+    def result
+      @result
+    end
+
     def message
       @locale.localization
     end
@@ -83,15 +87,18 @@ module Codebreaker
       @secret_code = (1..4).map { rand(1..6) }
     end
 
+    def secret_code
+      @secret_code
+    end
+
     def fancy_algo(guess, secret_code)
-      result = guess.chars.map(&:to_i).map.with_index do |item, index|
+      guess.chars.map(&:to_i).map.with_index do |item, index|
         case
           when item == secret_code[index] then RIGHT_ANSWER
           when secret_code[index..-1].include?(item) then RIGHT_ANSWER_DIFF_INDEX
           else WRONG_ANSWER
         end
-      end
-      result.join
+      end.join
     end
 
     def calculate_score
@@ -103,7 +110,7 @@ module Codebreaker
       end
 
       attempt_rate, hint_rate = level_rates
-      guessed = @result.count(RIGHT_ANSWER)
+      guessed = result.count(RIGHT_ANSWER)
 
       used_attempts = configuration.max_attempts - attempts
       used_hints = configuration.max_hints - hints
