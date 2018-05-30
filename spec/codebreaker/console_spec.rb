@@ -111,5 +111,23 @@ module Codebreaker
       end
     end
 
+    describe '#submit_answer' do
+      before do
+        allow(console).to receive(:process)
+        allow(console).to receive(:user_interaction)
+        console.send(:submit_answer)
+      end
+
+      after { console.send(:submit_answer) }
+
+      it '#process call' do
+        expect(console).to receive(:process)
+      end
+
+      it '#user_interaction call' do
+        expect(console).to receive(:user_interaction)
+      end
+    end
+
   end
 end
