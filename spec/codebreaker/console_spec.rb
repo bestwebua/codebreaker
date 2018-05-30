@@ -25,6 +25,8 @@ module Codebreaker
       Codebreaker::Console.new(game)
     end
 
+    let(:message) { console.instance_variable_get(:@locale).localization }
+
     describe '#initialize' do
       describe 'locale' do
         specify { expect(console.instance_variable_get(:@locale)).to be_an_instance_of(Localization) }
@@ -87,7 +89,27 @@ module Codebreaker
       end
     end
 
-    
+    describe '#start_game' do
+      before do
+        allow(console).to receive(:submit_answer)
+        allow(console).to receive(:puts)
+        console.start_game
+      end
+
+      after { console.start_game }
+
+      it 'receive welcome message' do
+        expect(console).to receive(:puts).with(message['alerts']['welcome'].colorize(:background => :blue))
+      end
+
+      it 'receive about hint message' do
+        expect(console).to receive(:puts).with(message['alerts']['hint_info'])
+      end
+
+      it '#submit_answer call' do
+        expect(console).to receive(:submit_answer)
+      end
+    end
 
   end
 end
