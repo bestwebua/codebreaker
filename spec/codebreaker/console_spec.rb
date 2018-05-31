@@ -129,5 +129,19 @@ module Codebreaker
       end
     end
 
+    describe '#input_selector' do
+      context "user's input" do
+        it "'y' should return true" do
+          allow(console).to receive(:gets).and_return(Codebreaker::Console::YES)
+          expect(console.send(:input_selector)).to be(true)
+        end
+
+        it 'other keys should returns false' do
+          allow(console).to receive(:gets).and_return('n').once
+          expect(console.send(:input_selector)).to be(false)
+        end
+      end
+    end
+
   end
 end
