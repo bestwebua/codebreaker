@@ -80,7 +80,7 @@ module Codebreaker
                 specify { expect(console.scores).to_not be_empty }
 
                 it 'all items should be an instances of Codebreaker::Score' do
-                  expect(console.scores.all? { |i| i.is_a?(Score) }).to be(true)
+                  expect(console.scores.all? { |item| item.is_a?(Score) }).to be(true)
                 end
               end
             end
