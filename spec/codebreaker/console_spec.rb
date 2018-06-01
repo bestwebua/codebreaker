@@ -205,7 +205,7 @@ module Codebreaker
           let(:summary) { message['alerts']['won'].green }
 
           it 'message with score' do
-            allow(console.game).to receive(:won?).and_return(true)
+            allow(game).to receive(:won?).and_return(true)
             expect(console).to receive(:puts).with(ERB.new(message['info']['results']).result(binding))
           end
         end
@@ -227,6 +227,26 @@ module Codebreaker
         it '#new_game' do
           expect(console).to receive(:new_game)
         end
+      end
+    end
+
+    describe '#save_game' do
+      before do
+        allow(console).to receive(:print)
+        allow(console).to receive(:input_selector)
+        allow(console).to receive(:save_game_data)
+        console.send(:save_game)
+      end
+
+      after { console.send(:save_game) }
+
+      it 'save message alert' do
+        expect(console).to receive(:print).with(message['alerts']['save_game'])
+      end
+
+      it '#save_game_data call' do
+        allow(console).to receive(:input_selector).and_return(true)
+        expect(console).to receive(:save_game_data)
       end
     end
 
