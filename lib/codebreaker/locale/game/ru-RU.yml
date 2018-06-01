@@ -8,7 +8,3 @@
     invalid_input: Ответ должен содержать 4 цифры в диапазоне от 1 до 6!
     no_attempts: Доступные попытки исчерпаны!
     no_hints: К сожалению, больше нет подсказок!
-  info:
-    won: выиграл
-    lost: проиграл
-    user_achievements: Игрок '<%= configuration.player_name %>' <%= status %>, уровень '<%= configuration.level %>' с общим счетом <%= score %> поинтов.
