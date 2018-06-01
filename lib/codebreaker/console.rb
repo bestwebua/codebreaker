@@ -7,6 +7,7 @@ module Codebreaker
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
     HINT = '-h'
     YES = 'y'
+    EMPTY_INPUT = ''
 
     attr_reader :game, :storage_path, :scores
 
@@ -63,7 +64,7 @@ module Codebreaker
 
     def user_interaction
       unless game.attempts.zero?
-        input, status, step = '', false, 0
+        input, status, step = EMPTY_INPUT, false, 0
         until status
           begin
             game.guess_valid?(input)
@@ -105,7 +106,7 @@ module Codebreaker
     end
 
     def input_selector
-      input = ''
+      input = EMPTY_INPUT
         until %w(y n).include?(input)
           print " (y/n) #{message['alerts']['yes_or_no']}:"
           input = gets.chomp
