@@ -1,5 +1,3 @@
-require 'erb'
-
 module Codebreaker
   GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level, :lang)
 
@@ -52,11 +50,6 @@ module Codebreaker
 
     def score
       calculate_score
-    end
-
-    def print_achievements
-      status = won? ? message['info']['won'] : message['info']['lost']
-      ERB.new(message['info']['user_achievements']).result(binding)
     end
 
     private

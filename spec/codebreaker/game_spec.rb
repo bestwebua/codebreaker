@@ -250,20 +250,6 @@ module Codebreaker
             end
           end
         end
-
-        describe '#print_achievements' do
-          context 'when lost' do
-            specify { expect(game.print_achievements).to eq("User 'Mike' lost the game on 'simple' level with total score 0 points.") }
-          end
-
-          context 'when won' do
-            before do
-              game.instance_variable_set(:@attempts, 0)
-              game.instance_variable_set(:@result, '++++')
-            end
-            specify { expect(game.print_achievements).to eq("User 'Mike' won the game on 'simple' level with total score 200 points.") }
-          end
-        end
       end
     end
   end
