@@ -148,7 +148,6 @@ module Codebreaker
         end
 
         it 'return info message with game hint' do
-          #puts console.game.hints
           expect(console).to receive(:puts).with(console_message)
         end
       end
@@ -161,7 +160,6 @@ module Codebreaker
           expect(console).to receive(:puts).with(game_hint_error)
         end
       end
-
     end
 
     describe '#motivation_message' do
@@ -179,6 +177,56 @@ module Codebreaker
 
       context 'when no attempts left' do
         specify { expect(no_attempts_left.send(:motivation_message)).to be_nil }
+      end
+    end
+
+    describe '#user_interaction' do
+      it 'need to write a beautiful test'
+    end
+
+    describe '#process' do
+      it 'need to write a beautiful test'
+    end
+
+    describe '#finish_game' do
+      before do
+        allow(console).to receive(:puts)
+        allow(console).to receive(:save_game)
+        allow(console).to receive(:new_game)
+        console.send(:finish_game)
+      end
+
+      after { console.send(:finish_game) }
+
+      describe 'return info message' do
+        let(:game) { console.game }
+
+        context 'when player wins' do
+          let(:summary) { message['alerts']['won'].green }
+
+          it 'message with score' do
+            allow(console.game).to receive(:won?).and_return(true)
+            expect(console).to receive(:puts).with(ERB.new(message['info']['results']).result(binding))
+          end
+        end
+
+        context 'when player loses' do
+          let(:summary) { message['alerts']['lose'].red }
+
+          it 'message with score' do
+            expect(console).to receive(:puts).with(ERB.new(message['info']['results']).result(binding))
+          end
+        end
+      end
+
+      describe 'call methods' do
+        it '#save_game' do
+          expect(console).to receive(:save_game)
+        end
+
+        it '#new_game' do
+          expect(console).to receive(:new_game)
+        end
       end
     end
 
