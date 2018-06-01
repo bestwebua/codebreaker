@@ -129,6 +129,24 @@ module Codebreaker
       end
     end
 
+    describe '#motivation_message' do
+      before do
+        console.game.instance_variable_set(:@configuration, console.game.configuration.dup)
+        console.game.configuration.max_attempts = 1
+      end
+
+      let(:attempts_still_have) { console.game.instance_variable_set(:@attempts, 1); console }
+      let(:no_attempts_left) { console.game.instance_variable_set(:@attempts, 0); console }
+
+      context 'when attempts still have' do
+        specify { expect(attempts_still_have.send(:motivation_message)).to eq(message['alerts']['motivation']) }
+      end
+
+      context 'when no attempts left' do
+        specify { expect(no_attempts_left.send(:motivation_message)).to be_nil }
+      end
+    end
+
     describe '#input_selector' do
       context "user's input" do
         it "'y' should return true" do
