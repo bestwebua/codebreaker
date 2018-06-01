@@ -129,6 +129,41 @@ module Codebreaker
       end
     end
 
+    describe '#show_hint' do
+      before do
+        allow(console).to receive(:puts)
+        console.send(:show_hint)
+      end
+
+      after { console.send(:show_hint) }
+
+      context 'when hints still existing' do
+        before do
+          console.game.instance_variable_set(:@hints, 2)
+          console.game.instance_variable_set(:@secret_code, [1, 1, 1, 1])
+        end
+
+        let(:console_message) do
+          "#{message['alerts']['hint']}: #{console.game.hint.to_s.green}"
+        end
+
+        it 'return info message with game hint' do
+          #puts console.game.hints
+          expect(console).to receive(:puts).with(console_message)
+        end
+      end
+
+      context 'when no hints left' do
+        before { console.game.instance_variable_set(:@hints, 0) }
+        let(:game_hint_error) { console.game.send(:message)['alerts']['no_hints'].red }
+
+        it 'return game hint error' do
+          expect(console).to receive(:puts).with(game_hint_error)
+        end
+      end
+
+    end
+
     describe '#motivation_message' do
       before do
         console.game.instance_variable_set(:@configuration, console.game.configuration.dup)
