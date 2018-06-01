@@ -92,7 +92,7 @@ module Codebreaker
         puts game.to_guess(input)
         puts motivation_message
       rescue => error
-        puts error.to_s.red
+        puts error
         finish_game
       end
       game.won? ? finish_game : submit_answer
