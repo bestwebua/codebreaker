@@ -12,28 +12,29 @@ module Codebreaker
       end
     end
 
+    let(:message) { game.instance_variable_get(:@locale).localization }
+
     describe '#new' do
       context 'without block or params' do
-        specify { expect { subject }.to raise_error(RuntimeError, 'The configuration is incomplete.') }
+        specify { expect { subject }.to raise_error(RuntimeError, message['errors']['fail_configuration']) }
       end
 
       context 'with block or params' do
         describe 'with wrong params' do
-          error = 'Max_attempts must be more then zero, max_hints must be positive.'
           
           context 'when max_attempts, max_hints not integers' do
             let(:not_integers) { Game.new('Mike', '5', '2', :simple, :end) }
-            specify { expect { not_integers }.to raise_error(RuntimeError, error) }
+            specify { expect { not_integers }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
           end
 
           context 'when max_attempts < 1' do
             let(:max_attempts) { Game.new('Mike', 0, 2, :simple, :end) }
-            specify { expect { max_attempts }.to raise_error(RuntimeError, error) }
+            specify { expect { max_attempts }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
           end
 
           context 'when max_hints negative' do
             let(:max_hints) { Game.new('Mike', 1, -1, :simple, :end) }
-            specify { expect { max_hints }.to raise_error(RuntimeError, error) }
+            specify { expect { max_hints }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
           end
         end
 
@@ -86,11 +87,11 @@ module Codebreaker
 
         describe '#guess_valid?' do
           it 'accepts string only' do
-            expect { game.guess_valid?(1) }.to raise_error(RuntimeError, 'Invalid input type.')
+            expect { game.guess_valid?(1) }.to raise_error(RuntimeError, message['errors']['invalid_input'])
           end
 
           it 'include digits only' do
-            expect { game.guess_valid?('1a') }.to raise_error(RuntimeError, 'Answer should equal 4 digits in range from 1 to 6!')
+            expect { game.guess_valid?('1a') }.to raise_error(RuntimeError, message['alerts']['invalid_input'])
           end
 
           it 'consists of 4 digis in range 1..6' do
@@ -116,7 +117,7 @@ module Codebreaker
 
             context 'when no attempts left' do
               before { game.instance_variable_set(:@attempts, 0) }
-              specify { expect { game.to_guess('1111') }.to raise_error(RuntimeError, 'Oops, no attempts left!') }
+              specify { expect { game.to_guess('1111') }.to raise_error(RuntimeError, message['alerts']['no_attempts']) }
             end
           end
 
@@ -184,7 +185,7 @@ module Codebreaker
 
           context 'when no hints left' do
             before { game.instance_variable_set(:@hints, 0) }
-            specify { expect { game.hint }.to raise_error(RuntimeError, 'Oops, no hints left!') }
+            specify { expect { game.hint }.to raise_error(RuntimeError, message['alerts']['no_hints']) }
           end
         end
 
@@ -214,7 +215,7 @@ module Codebreaker
 
               context 'unknown' do
                 before { game.configuration.level = :unknown }
-                specify { expect { get_score }.to raise_error(RuntimeError, 'Unknown game level.') }
+                specify { expect { get_score }.to raise_error(RuntimeError, message['errors']['unknown_level']) }
               end
             end
 
