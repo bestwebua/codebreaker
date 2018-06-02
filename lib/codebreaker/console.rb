@@ -5,9 +5,9 @@ require 'yaml'
 module Codebreaker
   class Console
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
-    HINT = '-h'
-    YES = 'y'
-    EMPTY_INPUT = ''
+    HINT = '-h'.freeze
+    YES = 'y'.freeze
+    EMPTY_INPUT = ''.freeze
 
     attr_reader :game, :storage_path, :scores
 
