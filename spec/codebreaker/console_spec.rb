@@ -301,5 +301,11 @@ module Codebreaker
       end
     end
 
+    describe '#save_user_score' do
+      context 'add score object when method was called' do
+        specify { expect { console.send(:save_user_score) }.to change { console.scores.size }.from(0).to(1) }
+      end
+    end
+
   end
 end
