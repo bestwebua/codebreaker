@@ -63,13 +63,17 @@ module Codebreaker
       end
     end
 
-    def apply_configuration
-      check_configuration
-      configuration.freeze
+    def create_instance_vars
       @attempts = configuration.max_attempts
       @hints = configuration.max_hints
       @locale.lang = configuration.lang
       @result = ''
+    end
+
+    def apply_configuration
+      check_configuration
+      configuration.freeze
+      create_instance_vars
     end
 
     def result
