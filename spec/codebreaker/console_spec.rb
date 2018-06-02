@@ -251,8 +251,22 @@ module Codebreaker
     end
 
     describe '#input_selector' do
-      context "user's input" do
-        it "'y' should return true" do
+      context 'input info message' do
+        before do
+          allow(console).to receive(:print)
+          allow(console).to receive_message_chain(:gets, :chomp).and_return(Codebreaker::Console::YES)
+          console.send(:input_selector)
+        end
+
+        after { console.send(:input_selector) }
+
+        it 'return y/n alert' do
+          expect(console).to receive(:print).with(" (y/n) #{message['alerts']['yes_or_no']}:")
+        end
+      end
+
+      context 'allow user input' do
+        it 'y key should return true' do
           allow(console).to receive(:gets).and_return(Codebreaker::Console::YES)
           expect(console.send(:input_selector)).to be(true)
         end
