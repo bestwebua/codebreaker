@@ -54,13 +54,17 @@ module Codebreaker
 
     private
 
-    def apply_configuration
+    def check_configuration
       raise message['errors']['fail_configuration'] if configuration.any?(&:nil?)
-        begin
-          raise if configuration.max_attempts < 1 || configuration.max_hints.negative?
-        rescue
-          raise message['errors']['fail_configuration_values']
-        end
+      begin
+        raise if configuration.max_attempts < 1 || configuration.max_hints.negative?
+      rescue
+        raise message['errors']['fail_configuration_values']
+      end
+    end
+
+    def apply_configuration
+      check_configuration
       configuration.freeze
       @attempts = configuration.max_attempts
       @hints = configuration.max_hints
