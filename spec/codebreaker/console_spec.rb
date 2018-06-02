@@ -198,13 +198,13 @@ module Codebreaker
 
       after { console.send(:finish_game) }
 
-      describe 'return info message' do
+      describe 'info message' do
         let(:game) { console.game }
 
         context 'when player wins' do
           let(:summary) { message['alerts']['won'].green }
 
-          it 'message with score' do
+          it 'return message with score' do
             allow(game).to receive(:won?).and_return(true)
             expect(console).to receive(:puts).with(ERB.new(message['info']['results']).result(binding))
           end
@@ -213,7 +213,7 @@ module Codebreaker
         context 'when player loses' do
           let(:summary) { message['alerts']['lose'].red }
 
-          it 'message with score' do
+          it 'return message with score' do
             expect(console).to receive(:puts).with(ERB.new(message['info']['results']).result(binding))
           end
         end
@@ -240,7 +240,7 @@ module Codebreaker
 
       after { console.send(:save_game) }
 
-      it 'save message alert' do
+      it 'return save message alert' do
         expect(console).to receive(:print).with(message['alerts']['save_game'])
       end
 
@@ -275,6 +275,29 @@ module Codebreaker
           allow(console).to receive(:gets).and_return('n').once
           expect(console.send(:input_selector)).to be(false)
         end
+      end
+    end
+
+    describe '#save_game_data' do
+      before do
+        allow(console).to receive(:puts)
+        allow(console).to receive(:save_user_score)
+        allow(console).to receive(:save_to_yml)
+        console.send(:save_game_data)
+      end
+
+      after { console.send(:save_game_data) }
+
+      it 'return successfully save message' do
+        expect(console).to receive(:puts).with(message['info']['successfully_saved'].green)
+      end
+
+      it '#save_user_score call' do
+        expect(console).to receive(:save_user_score)
+      end
+
+      it '#save_to_yml call' do
+        expect(console).to receive(:save_to_yml)
       end
     end
 
