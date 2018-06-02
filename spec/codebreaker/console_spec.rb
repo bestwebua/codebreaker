@@ -307,5 +307,9 @@ module Codebreaker
       end
     end
 
+    describe '#current_user_score' do
+      specify { expect(console.send(:current_user_score)).to be_an_instance_of(Score) }
+    end
+
   end
 end
