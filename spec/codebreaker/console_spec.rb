@@ -320,5 +320,49 @@ module Codebreaker
       end
     end
 
+    describe '#new_game' do
+      before do
+        allow(console).to receive(:print)
+        allow(console).to receive(:input_selector).and_return(true)
+        allow(console).to receive(:load_new_game)
+        allow(console).to receive(:start_game)
+        console.send(:new_game)
+      end
+
+      after { console.send(:new_game) }
+
+      context 'new game dialog' do
+        specify { expect(console).to receive(:print).with(message['alerts']['new_game']) }
+      end
+
+      context 'when user choose yes' do
+        it '#load_new_game call' do
+          expect(console).to receive(:load_new_game)
+        end
+
+        it '#start_game call' do
+          expect(console).to receive(:start_game)
+        end
+      end
+
+      context 'when user choose no' do
+        before do
+          allow(console).to receive(:input_selector).and_return(false)
+          allow(console).to receive(:puts)
+          allow(console).to receive(:exit_game)
+        end
+
+        it 'should return exit message' do
+          expect(console).to receive(:puts).with(message['alerts']['shutdown'])
+        end
+
+        it '#exit_game call' do
+          expect(console).to receive(:exit_game)
+        end
+      end
+
+
+    end
+
   end
 end
