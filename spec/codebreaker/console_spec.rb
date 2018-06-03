@@ -333,6 +333,10 @@ module Codebreaker
 
       context 'new game dialog' do
         specify { expect(console).to receive(:print).with(message['alerts']['new_game']) }
+
+        it '#input_selector call' do
+          expect(console).to receive(:input_selector)
+        end
       end
 
       context 'when user choose yes' do
@@ -374,6 +378,45 @@ module Codebreaker
 
     describe '#exit_console' do
       specify { expect { console.send(:exit_console) }.to raise_error(SystemExit) }
+    end
+
+    describe '#erase_scores' do
+      before do
+        allow(console).to receive(:print)
+        allow(console).to receive(:input_selector)
+        allow(console).to receive(:erase_game_data)
+        allow(console).to receive(:exit_console)
+        console.erase_scores
+      end
+
+      after { console.erase_scores }
+
+      it 'returns warning message' do
+        expect(console).to receive(:print).with(message['alerts']['erase_scores'])
+      end
+
+      it '#input_selector call' do
+        expect(console).to receive(:input_selector)
+      end
+
+      it '#erase_game_data call' do
+        allow(console).to receive(:input_selector).and_return(true)
+        expect(console).to receive(:erase_game_data)
+      end
+
+      it '#exit_console call' do
+        expect(console).to receive(:exit_console)
+      end
+    end
+
+    describe '#erase_game_data' do
+      context 'when scores empty' do
+
+      end
+
+      context 'when scores not empty' do
+
+      end
     end
   end
 end
