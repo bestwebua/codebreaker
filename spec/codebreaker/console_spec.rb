@@ -311,5 +311,14 @@ module Codebreaker
       specify { expect(console.send(:current_user_score)).to be_an_instance_of(Score) }
     end
 
+    describe '#save_to_yml' do
+      data_dir = "#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}"
+      after { File.delete(@current_yml) }
+      
+      it 'data folder should be not empty' do
+        expect { console.send(:save_to_yml) }.to change { Dir.empty?(data_dir) }.from(true).to(false)
+      end
+    end
+
   end
 end
