@@ -152,8 +152,12 @@ module Codebreaker
         start_game
       else
         puts message['alerts']['shutdown']
-        exit
+        exit_console
       end
+    end
+
+    def exit_console
+      exit
     end
 
     def load_new_game
