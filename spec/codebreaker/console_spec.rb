@@ -349,19 +349,21 @@ module Codebreaker
         before do
           allow(console).to receive(:input_selector).and_return(false)
           allow(console).to receive(:puts)
-          allow(console).to receive(:exit_game)
+          allow(console).to receive(:exit_console)
         end
 
         it 'should return exit message' do
           expect(console).to receive(:puts).with(message['alerts']['shutdown'])
         end
 
-        it '#exit_game call' do
-          expect(console).to receive(:exit_game)
+        it '#exit_console call' do
+          expect(console).to receive(:exit_console)
         end
       end
+    end
 
-
+    describe '#exit_console' do
+      specify { expect { console.send(:exit_console) }.to raise_error(SystemExit) }
     end
 
   end
