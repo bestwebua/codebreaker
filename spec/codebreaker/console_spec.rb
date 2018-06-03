@@ -5,6 +5,7 @@ module Codebreaker
     before(:context) do
       @current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
       @temp_yml = "#{File.expand_path('./temp_data/scores.yml', File.dirname(__FILE__))}"
+      @test_yml = "#{File.expand_path('./test_data/scores.yml', File.dirname(__FILE__))}"
       data_empty = Dir.empty?("#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}")
       FileUtils.mv(@current_yml, @temp_yml) unless data_empty
     end
@@ -71,7 +72,6 @@ module Codebreaker
 
               context 'when saved data exists' do
                 before do
-                  @test_yml = "#{File.expand_path('./test_data/scores.yml', File.dirname(__FILE__))}"
                   FileUtils.mv(@test_yml, @current_yml)
                 end
 
@@ -411,11 +411,24 @@ module Codebreaker
 
     describe '#erase_game_data' do
       context 'when scores empty' do
+        before do
+          allow(console).to receive(:puts)
+          console.send(:erase_game_data)
+        end
 
+        after { console.send(:erase_game_data) }
+
+        it 'returns error message' do
+          expect(console).to receive(:puts).with(message['errors']['file_not_found'].red)
+        end
       end
 
       context 'when scores not empty' do
+        before { FileUtils.copy_file(@test_yml, @current_yml) }
 
+        it 'returns info message' do
+          expect { console.send(:erase_game_data) }.to output { message['info']['successfully_erased'].green }.to_stdout
+        end
       end
     end
   end
