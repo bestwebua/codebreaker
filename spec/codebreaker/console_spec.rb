@@ -365,6 +365,5 @@ module Codebreaker
     describe '#exit_console' do
       specify { expect { console.send(:exit_console) }.to raise_error(SystemExit) }
     end
-
   end
 end
