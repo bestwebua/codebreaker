@@ -362,6 +362,16 @@ module Codebreaker
       end
     end
 
+    describe '#load_new_game' do
+      before { console.send(:load_new_game) }
+      
+      specify { expect(console.game).to be_an_instance_of(Game) }
+
+      it 'config of new game should be equal to config snapshot' do
+        expect(console.game.configuration).to eq(console.instance_variable_get(:@game_config_snapshot))
+      end
+    end
+
     describe '#exit_console' do
       specify { expect { console.send(:exit_console) }.to raise_error(SystemExit) }
     end
