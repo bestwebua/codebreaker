@@ -98,8 +98,11 @@ module Codebreaker
       game.won? ? finish_game : submit_answer
     end
 
+    def summary
+      game.won? ? message['alerts']['won'].green : message['alerts']['lose'].red
+    end
+
     def finish_game
-      summary = game.won? ? message['alerts']['won'].green : message['alerts']['lose'].red
       puts ERB.new(message['info']['results']).result(binding)
       save_game
       new_game
