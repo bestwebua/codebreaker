@@ -266,6 +266,8 @@ module Codebreaker
       end
 
       context 'allow user input' do
+        before { allow(console).to receive(:print) }
+
         it 'y key should return true' do
           allow(console).to receive(:gets).and_return(Codebreaker::Console::YES)
           expect(console.send(:input_selector)).to be(true)
