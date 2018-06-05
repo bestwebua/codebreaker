@@ -185,7 +185,61 @@ module Codebreaker
     end
 
     describe '#process' do
-      it 'need to write a beautiful test'
+      before do
+        console.game.instance_variable_set(:@attempts, 2)
+        console.game.instance_variable_set(:@secret_code, [1, 1, 1, 1])
+        allow(console).to receive(:puts)
+        allow(console).to receive(:finish_game)
+        console.send(:process, '1111')
+      end
+
+      after { console.send(:process, '1111') }
+
+      context 'when free attempts are available' do
+        context 'user was use attempt' do
+          it '#to_guess call' do
+            expect(console.game).to receive(:to_guess)
+          end
+
+          it 'puts marked result' do
+            expect(console).to receive(:puts).with(Game::RIGHT_ANSWER * 4)
+          end
+
+          it '#motivation_message call' do
+            expect(console).to receive(:motivation_message)
+          end
+        end
+
+        context 'user won' do
+          it '#finish_game call' do
+            allow(console.game). to receive(:won?).and_return(true)
+            expect(console).to receive(:finish_game)
+          end
+        end
+
+        context 'user not won' do
+          it '#submit_answer call' do
+            allow(console.game). to receive(:won?).and_return(false)
+            expect(console).to receive(:submit_answer)
+          end
+        end
+      end
+
+      context 'when no free attempts are available' do
+        before { console.game.instance_variable_set(:@attempts, 1) }
+        
+        it 'puts marked result' do
+          expect(console).to receive(:puts)
+        end
+
+        it 'puts error' do
+          expect(console).to receive(:puts).and_raise
+        end
+
+        it '#finish_game call' do
+          expect(console).to receive(:finish_game)
+        end
+      end
     end
 
     describe '#finish_game' do
