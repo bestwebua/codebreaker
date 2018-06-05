@@ -63,8 +63,8 @@ module Codebreaker
     end
 
     def user_interaction
-      unless game.attempts.zero?
-        input, status, step = EMPTY_INPUT, false, 0
+      return if game.attempts.zero?
+      input, status, step = EMPTY_INPUT, false, 0
         until status
           begin
             game.guess_valid?(input)
@@ -77,8 +77,7 @@ module Codebreaker
             show_hint if input == HINT
           end
         end
-        input
-      end
+      input
     end
 
     def motivation_message
