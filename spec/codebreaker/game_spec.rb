@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 module Codebreaker
+  RSpec.describe GameConfiguration do
+    describe '#initialize' do
+      context 'new object' do
+        it 'should be child of Struct' do
+          expect(subject.class.superclass).to eq(Struct)
+        end
+      end
+    end
+  end
+
   RSpec.describe Game do
     let(:game) do
       Game.new do |config|
