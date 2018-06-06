@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['admin@bestweb.com.ua']
 
   spec.summary       = %q{Codebreaker}
-  spec.description   = %q{New version of logic terminal game.}
+  spec.description   = %q{New version of logic terminal game with English and Russian localizations. For demo mode just use: Codebreaker::Console.new}
   spec.homepage      = 'https://github.com/bestwebua/homework-04-codebreaker'
   spec.license       = 'MIT'
 
