@@ -145,6 +145,8 @@ module Codebreaker
     end
 
     def save_to_yml
+      storage_dir = File.dirname(storage_path)
+      Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
       File.open(storage_path, 'w') do |file|
         file.write(YAML.dump(scores))
       end
