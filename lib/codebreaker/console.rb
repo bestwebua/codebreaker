@@ -126,6 +126,7 @@ module Codebreaker
 
     def save_game_data
       save_user_score
+      prepare_storage_dir
       save_to_yml
       puts message['info']['successfully_saved'].green
     end
@@ -144,9 +145,12 @@ module Codebreaker
       end
     end
 
-    def save_to_yml
+    def prepare_storage_dir
       storage_dir = File.dirname(storage_path)
       Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
+    end
+
+    def save_to_yml
       File.open(storage_path, 'w') do |file|
         file.write(YAML.dump(scores))
       end
