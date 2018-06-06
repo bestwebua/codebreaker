@@ -3,6 +3,8 @@ require 'spec_helper'
 module Codebreaker
   RSpec.describe Console do
     before(:context) do
+      storage_dir = "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}"
+      Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
       @current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
       @temp_yml = "#{File.expand_path('./temp_data/scores.yml', File.dirname(__FILE__))}"
       @test_yml = "#{File.expand_path('./test_data/scores.yml', File.dirname(__FILE__))}"
