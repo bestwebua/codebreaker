@@ -80,10 +80,13 @@ module Codebreaker
       input
     end
 
+    def message_is_allowed?
+      !game.won? && game.attempts == rand(1..game.configuration.max_attempts)
+    end
+
     def motivation_message
-      if !game.won? && game.attempts == rand(1..game.configuration.max_attempts)
-        message['alerts']['motivation']
-      end
+      return unless message_is_allowed?
+      message['alerts']['motivation']
     end
 
     def process(input)
