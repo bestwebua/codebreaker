@@ -3,8 +3,8 @@ require 'spec_helper'
 module Codebreaker
   RSpec.describe Console do
     before(:context) do
-      storage_dir = "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}"
-      Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
+      @storage_dir = "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}"
+      Dir.mkdir(@storage_dir) unless File.exists?(@storage_dir)
       @current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
       @temp_yml = "#{File.expand_path('./temp_data/scores.yml', File.dirname(__FILE__))}"
       @test_yml = "#{File.expand_path('./test_data/scores.yml', File.dirname(__FILE__))}"
@@ -15,6 +15,7 @@ module Codebreaker
     after(:context) do
       temp_empty = Dir.empty?("#{File.expand_path('./temp_data/.', File.dirname(__FILE__))}")
       FileUtils.mv(@temp_yml, @current_yml) unless temp_empty
+      Dir.rmdir(@storage_dir) if Dir.empty?(@storage_dir)
     end
 
     subject(:console) do
@@ -360,6 +361,7 @@ module Codebreaker
       before do
         allow(console).to receive(:puts)
         allow(console).to receive(:save_user_score)
+        allow(console).to receive(:prepare_storage_dir)
         allow(console).to receive(:save_to_yml)
         console.send(:save_game_data)
       end
@@ -372,6 +374,10 @@ module Codebreaker
 
       it '#save_user_score call' do
         expect(console).to receive(:save_user_score)
+      end
+
+      it '#prepare_storage_dir call' do
+        expect(console).to receive(:prepare_storage_dir)
       end
 
       it '#save_to_yml call' do
@@ -387,6 +393,17 @@ module Codebreaker
 
     describe '#current_user_score' do
       specify { expect(console.send(:current_user_score)).to be_an_instance_of(Score) }
+    end
+
+    describe '#prepare_storage_dir' do
+      let(:has_storage_dir) do
+        console.send(:prepare_storage_dir)
+        File.exists?(@storage_dir)
+      end
+
+      context 'storage dir should be exists' do
+        specify { expect(has_storage_dir).to be(true) }
+      end
     end
 
     describe '#save_to_yml' do
