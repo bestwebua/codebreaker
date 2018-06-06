@@ -181,7 +181,27 @@ module Codebreaker
     end
 
     describe '#user_interaction' do
-      it 'need to write a beautiful test'
+      context 'when no attempts left' do
+        before { console.game.instance_variable_set(:@attempts, 0) }
+        specify { expect(console.send(:user_interaction)).to be_nil }
+      end
+
+      context 'when attempts are available' do
+        before do
+          allow(console.game).to receive(:guess_valid?)
+          allow(console).to receive(:puts)
+          allow(console).to receive_message_chain(:gets, :chomp)
+          console.send(:user_interaction)
+        end
+
+        after { console.send(:user_interaction) }
+
+        it 'puts guess message' do
+          allow(console.game).to receive(:guess_valid?).and_raise
+          allow(console).to receive(:gets).and_return('').once
+          expect(console).to receive(:puts)
+        end
+      end
     end
 
     describe '#process' do
@@ -308,7 +328,7 @@ module Codebreaker
       context 'input info message' do
         before do
           allow(console).to receive(:print)
-          allow(console).to receive_message_chain(:gets, :chomp).and_return(Codebreaker::Console::YES)
+          allow(console).to receive_message_chain(:gets, :chomp).and_return(Console::YES)
           console.send(:input_selector)
         end
 
@@ -323,7 +343,7 @@ module Codebreaker
         before { allow(console).to receive(:print) }
 
         it 'y key should return true' do
-          allow(console).to receive(:gets).and_return(Codebreaker::Console::YES)
+          allow(console).to receive(:gets).and_return(Console::YES)
           expect(console.send(:input_selector)).to be(true)
         end
 
