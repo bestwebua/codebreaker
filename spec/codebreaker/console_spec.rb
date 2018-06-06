@@ -186,7 +186,7 @@ module Codebreaker
         specify { expect(console.send(:user_interaction)).to be_nil }
       end
 
-      context 'when attempts are available' do
+      skip context 'when attempts are available' do
         before do
           allow(console.game).to receive(:guess_valid?)
           allow(console).to receive(:puts)
