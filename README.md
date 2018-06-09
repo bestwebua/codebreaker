@@ -56,7 +56,7 @@ Codebreaker::Console.new
 ### Detail sample of Codebreaker usage ###
 
 ```ruby
-# Init Game instance with block
+# Initialize Game instance with block
 game = Codebreaker::Game.new do |config|
   config.player_name = 'Mike'
   config.max_attempts = 5
@@ -65,7 +65,8 @@ game = Codebreaker::Game.new do |config|
   config.lang = :en
 end
 
-# Alternative init Game instance with args
+# Alternative initialize Game instance with args, args sequence:
+# :player_name, :max_attempts, :max_hints, :level, :lang
 game = Codebreaker::Game.new('Mike', 5, 2, :middle, :en)
 
 # Init Console instance with your game
