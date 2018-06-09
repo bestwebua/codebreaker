@@ -56,6 +56,9 @@ Codebreaker::Console.new
 ### Detail sample of Codebreaker usage ###
 
 ```ruby
+# Require Codebreaker gem
+require 'codebreaker'
+
 # Initialize Game instance with block
 game = Codebreaker::Game.new do |config|
   config.player_name = 'Mike'
