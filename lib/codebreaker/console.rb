@@ -62,9 +62,9 @@ module Codebreaker
       end
     end
 
-    def user_interaction
+    def user_interaction(input = EMPTY_INPUT)
       return if game.attempts.zero?
-      input, status, step = EMPTY_INPUT, false, 0
+      status, step = false, 0
         until status
           begin
             game.guess_valid?(input)
