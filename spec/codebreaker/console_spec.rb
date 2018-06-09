@@ -189,20 +189,63 @@ module Codebreaker
         specify { expect(console.send(:user_interaction)).to be_nil }
       end
 
-      skip context 'when attempts are available' do
-        before do
-          allow(console.game).to receive(:guess_valid?)
-          allow(console).to receive(:puts)
-          allow(console).to receive_message_chain(:gets, :chomp)
-          console.send(:user_interaction)
+      context 'when attempts are available' do
+        context 'valid input' do
+          let(:valid_input) { '1234' }
+
+          before do
+            allow(console.game).to receive(:guess_valid?)
+            console.send(:user_interaction, valid_input)
+          end
+
+          after { console.send(:user_interaction, valid_input) }
+
+          it '#guess_valid? call' do
+            expect(console.game).to receive(:guess_valid?)
+          end
+
+          it 'returns input' do
+            expect(console.send(:user_interaction, valid_input)).to eq(valid_input)
+          end
         end
 
-        after { console.send(:user_interaction) }
+        context 'invalid input' do
+          let(:invalid_input) { Console::EMPTY_INPUT }
 
-        it 'puts guess message' do
-          allow(console.game).to receive(:guess_valid?).and_raise
-          allow(console).to receive(:gets).and_return('').once
-          expect(console).to receive(:puts)
+          before do
+            allow(console.game).to receive(:guess_valid?)
+            console.send(:user_interaction, invalid_input)
+          end
+
+          after { console.send(:user_interaction, invalid_input) }
+
+          it '#guess_valid? call' do
+            expect(console.game).to receive(:guess_valid?)
+          end
+
+          it 'puts guess message' do
+            expect(console.game).to receive(:guess_valid?).and_raise
+            allow(console).to receive_message_chain(:gets, :chomp)
+            expect(console).to receive(:puts).with("#{message['alerts']['guess']}:").once
+          end
+        end
+
+        context 'hint input' do
+          let(:hint_input) { Console::HINT }
+
+          before do
+            allow(console.game).to receive(:guess_valid?)
+            console.send(:user_interaction, hint_input)
+          end
+
+          after { console.send(:user_interaction, hint_input) }
+
+          it '#show_hint call' do
+            expect(console.game).to receive(:guess_valid?).and_raise
+            allow(console).to receive(:puts)
+            allow(console).to receive_message_chain(:gets, :chomp).and_return(hint_input)
+            expect(console).to receive(:show_hint).once
+          end
         end
       end
     end
