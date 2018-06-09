@@ -7,7 +7,7 @@ Codebreaker is a logic game in which the code-breaker tries to break a secret co
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'codebreaker'
+gem 'codebreaker2018'
 ```
 
 And then execute:
