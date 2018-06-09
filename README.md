@@ -22,7 +22,7 @@ Or install it yourself as:
 Best way to demonstrate Codebreaker is auto start demo game:
 
 ```ruby
-require 'codebreaker2018'
+require 'codebreaker'
 Codebreaker::Console.new
 ```
 
