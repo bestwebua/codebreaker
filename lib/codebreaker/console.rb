@@ -4,6 +4,8 @@ require 'yaml'
 
 module Codebreaker
   class Console
+    include Message
+
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
     HINT = '-h'.freeze
     YES = 'y'.freeze
@@ -44,10 +46,6 @@ module Codebreaker
 
     def load_game_data
       YAML.load(File.open(storage_path, 'r')) rescue []
-    end
-
-    def message
-      @locale.localization
     end
 
     def submit_answer
