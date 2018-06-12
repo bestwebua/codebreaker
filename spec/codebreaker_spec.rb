@@ -6,6 +6,7 @@ module Codebreaker
     specify { should be_const_defined(:Localization) }
     specify { should be_const_defined(:Game) }
     specify { should be_const_defined(:GameConfiguration) }
+    specify { should be_const_defined(:Message) }
     specify { should be_const_defined(:Score) }
     specify { should be_const_defined(:Console) }
   end
