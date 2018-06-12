@@ -2,6 +2,8 @@ module Codebreaker
   GameConfiguration = Struct.new(:player_name, :max_attempts, :max_hints, :level, :lang)
 
   class Game
+    include Message
+
     ZERO_POINTS = 0
     TEN_POINTS = 10
     TWENTY_POINTS = 20
@@ -78,10 +80,6 @@ module Codebreaker
 
     def result
       @result
-    end
-
-    def message
-      @locale.localization
     end
 
     def generate_secret_code
