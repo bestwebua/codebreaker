@@ -26,25 +26,35 @@ module Codebreaker
 
     describe '#new' do
       context 'without block or params' do
-        specify { expect { subject }.to raise_error(RuntimeError, message['errors']['fail_configuration']) }
+        specify do 
+          expect { subject }.to raise_error(RuntimeError, message['errors']['fail_configuration'])
+        end
       end
 
       context 'with block or params' do
         describe 'with wrong params' do
-          
           context 'when max_attempts, max_hints not integers' do
             let(:not_integers) { Game.new('Mike', '5', '2', :simple, :end) }
-            specify { expect { not_integers }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
+
+            specify do
+              expect { not_integers }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
+            end
           end
 
           context 'when max_attempts < 1' do
             let(:max_attempts) { Game.new('Mike', 0, 2, :simple, :end) }
-            specify { expect { max_attempts }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
+
+            specify do
+              expect { max_attempts }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
+            end
           end
 
           context 'when max_hints negative' do
             let(:max_hints) { Game.new('Mike', 1, -1, :simple, :end) }
-            specify { expect { max_hints }.to raise_error(RuntimeError, message['errors']['fail_configuration_values']) }
+
+            specify do
+              expect { max_hints }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
+            end
           end
         end
 
@@ -127,7 +137,10 @@ module Codebreaker
 
             context 'when no attempts left' do
               before { game.instance_variable_set(:@attempts, 0) }
-              specify { expect { game.to_guess('1111') }.to raise_error(RuntimeError, message['alerts']['no_attempts']) }
+
+              specify do
+                expect { game.to_guess('1111') }.to raise_error(RuntimeError, message['alerts']['no_attempts'])
+              end
             end
           end
 
@@ -137,6 +150,7 @@ module Codebreaker
             context 'guess item was equal secret item in the same position' do
               let(:guessed_items_sp_1) { game.to_guess('1264') }
               let(:guessed_items_sp_2) { game.to_guess('1255') }
+
               specify { expect(guessed_items_sp_1).to eq('++++') }
               specify { expect(guessed_items_sp_2).to eq('++  ') }
             end
@@ -144,6 +158,7 @@ module Codebreaker
             context 'guess item was equal secret item in the different position' do
               let(:guessed_items_dp_1) { game.to_guess('2641') }
               let(:guessed_items_dp_2) { game.to_guess('2254') }
+
               specify { expect(guessed_items_dp_1).to eq('--- ') }
               specify { expect(guessed_items_dp_2).to eq('-+ +') }
             end
@@ -177,6 +192,7 @@ module Codebreaker
           context 'when hint was called' do
             context 'if nothing guessed before call' do
               let(:secret_code) { game.instance_variable_get(:@secret_code) }
+
               it 'returns one of 4 secret digits' do
                 expect(secret_code).to include(game.hint)
               end
@@ -187,6 +203,7 @@ module Codebreaker
                 game.instance_variable_set(:@secret_code, [1, 2, 3, 4])
                 game.instance_variable_set(:@result, '+++ ')
               end
+
               it 'should return one of not guessed numbers' do
                 expect(game.hint).to eq(4)
               end
@@ -195,13 +212,17 @@ module Codebreaker
 
           context 'when no hints left' do
             before { game.instance_variable_set(:@hints, 0) }
-            specify { expect { game.hint }.to raise_error(RuntimeError, message['alerts']['no_hints']) }
+
+            specify do
+              expect { game.hint }.to raise_error(RuntimeError, message['alerts']['no_hints'])
+            end
           end
         end
 
         describe '#score' do
           describe 'levels' do
             before { game.instance_variable_set(:@configuration, game.configuration.dup) }
+
             let(:get_score) do
               game.instance_variable_set(:@attempts, 0)
               game.instance_variable_set(:@hints, 0)
@@ -225,12 +246,16 @@ module Codebreaker
 
               context 'unknown' do
                 before { game.configuration.level = :unknown }
-                specify { expect { get_score }.to raise_error(RuntimeError, message['errors']['unknown_level']) }
+
+                specify do
+                  expect { get_score }.to raise_error(RuntimeError, message['errors']['unknown_level'])
+                end
               end
             end
 
             describe 'one or more guessed' do
               before { game.instance_variable_set(:@result, '+   ') }
+
               context 'simple' do
                 specify { expect { get_score }.to change { game.score }.from(0).to(50) }
               end
