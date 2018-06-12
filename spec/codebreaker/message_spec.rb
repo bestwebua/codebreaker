@@ -1,11 +1,19 @@
 require 'spec_helper'
 
 module Codebreaker
-  RSpec.describe Message, :type => :helper do
-    skip describe '#message' do
+  RSpec.describe Message do
+    describe '#message' do
+      let(:object) do
+        Class.new do
+          include Message
+          define_method(:initialize) do
+            @locale = Localization.new(:console)
+          end
+        end.new
+      end
+
       specify do
-        assign(:locale, Localization.new(:game))
-        expect(helper.message).to be_an_instance_of(Hash)
+        expect(object.message).to be_an_instance_of(Hash)
       end
     end
   end
