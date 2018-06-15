@@ -28,7 +28,7 @@ module Codebreaker
     end
 
     let(:localization)       { Localization.new(:test_app) }
-    let(:localization_wrong) { Localization.new(:test_app, :eg) }
+    let(:localization_wrong) { Localization.new(:test_app, false, :eg) }
 
     describe '#new' do
       describe '#initialize' do
@@ -38,19 +38,31 @@ module Codebreaker
 
         describe 'with args' do
           describe '1 argument' do
-            context 'when wrong app type' do
+            context 'wrong app type' do
               let(:local_wrong_app) { Localization.new(:wrong_type) }
               specify { expect { local_wrong_app }.to raise_error(RuntimeError, 'Unknown application type.') }
             end
             
-            context 'when right app type' do
+            context 'right app type' do
               specify { expect(localization).to be_an_instance_of(Localization) }
             end
           end
 
           describe '2 arguments' do
+            context 'right external path' do
+              let(:external_path) { "#{File.expand_path('./test_locale/.', File.dirname(__FILE__))}" }
+              let(:external_localization) { Localization.new(:test_app, external_path) }
+              specify { expect(external_localization).to be_an_instance_of(Localization) }
+            end
+
+            context 'wrong external path' do
+              it 'awesome test here'
+            end
+          end
+
+          describe '3 arguments' do
             context 'when wrong app type' do
-              let(:local_wrong_app) { Localization.new(:wrong_type, :ru) }
+              let(:local_wrong_app) { Localization.new(:wrong_type, false, :ru) }
               specify { expect { local_wrong_app }.to raise_error(RuntimeError, 'Unknown application type.') }
             end
 
@@ -91,7 +103,7 @@ module Codebreaker
       end
 
       context 'return the requested localization if found' do
-        let(:localization_ru)        { Localization.new(:test_app, :ru) }
+        let(:localization_ru)        { Localization.new(:test_app, false, :ru) }
         let(:requested_localization) { localization_ru.instance_variable_get(:@localizations)[:ru] }
 
         it 'should equal requested localization' do
