@@ -4,8 +4,8 @@ module Codebreaker
   class Localization
     attr_accessor :lang
 
-    def initialize(app_type, lang = :en)
-      @lang = lang
+    def initialize(app_type, external_path = false, lang = :en)
+      @lang, @external_path = lang, external_path
       select_application(app_type)
       candidates_to_load
       merge_localizations
@@ -19,6 +19,7 @@ module Codebreaker
     private
 
     def localizations_dir
+      return @external_path if @external_path
       File.expand_path('./locale/.', File.dirname(__FILE__))
     end
 
@@ -41,7 +42,7 @@ module Codebreaker
 
     def merge_localizations
       localizations
-      loaded_ymls = @ymls_paths.map { |file| YAML.load(File.open(file, 'r')) }
+      loaded_ymls = candidates_to_load.map { |file| YAML.load(File.open(file, 'r')) }
       loaded_ymls.each { |loaded_yml| @localizations.update(loaded_yml) }
     end
   end
