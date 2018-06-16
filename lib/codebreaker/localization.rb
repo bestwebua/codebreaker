@@ -5,7 +5,8 @@ module Codebreaker
     attr_accessor :lang
 
     def initialize(app_type, external_path = false, lang = :en)
-      @lang, @external_path = lang, external_path
+      @lang = lang
+      apply_external_path(external_path)
       select_application(app_type)
       candidates_to_load
       merge_localizations
@@ -17,6 +18,13 @@ module Codebreaker
     end
 
     private
+
+    def apply_external_path(external_path)
+      if Dir.glob("#{external_path}/*/*.yml").empty? && external_path
+        raise ArgumentError, 'Invalid external path.'
+      end
+      @external_path = external_path ? external_path : false
+    end
 
     def localizations_dir
       return @external_path if @external_path
