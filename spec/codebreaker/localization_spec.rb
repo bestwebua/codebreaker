@@ -49,14 +49,16 @@ module Codebreaker
           end
 
           describe '2 arguments' do
+            let(:external_localization) { Localization.new(:test_app, external_path) }
+
             context 'right external path' do
               let(:external_path) { "#{File.expand_path('./test_locale/.', File.dirname(__FILE__))}" }
-              let(:external_localization) { Localization.new(:test_app, external_path) }
               specify { expect(external_localization).to be_an_instance_of(Localization) }
             end
 
             context 'wrong external path' do
-              it 'awesome test here'
+              let(:external_path) { 'some_cool_path' }
+              specify { expect {external_localization}.to raise_error(ArgumentError, 'Invalid external path.') }
             end
           end
 
