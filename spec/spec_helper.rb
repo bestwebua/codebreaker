@@ -1,6 +1,9 @@
 require 'simplecov'
 SimpleCov.start
 
+rspec_custom = File.join(File.dirname(__FILE__), 'codebreaker/support/**/*.rb')
+Dir[File.expand_path(rspec_custom)].each { |file| require file }
+
 require 'codebreaker'
 
 RSpec.configure do |config|
