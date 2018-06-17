@@ -1,10 +1,10 @@
 require 'colorize'
 require 'erb'
-require 'yaml'
 
 module Codebreaker
   class Console
     include Message
+    include Storage
 
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
     HINT = '-h'.freeze
@@ -42,10 +42,6 @@ module Codebreaker
       @game_config_snapshot = game.configuration.clone
       @storage_path = File.expand_path('./data/scores.yml', File.dirname(__FILE__))
       @scores = load_game_data
-    end
-
-    def load_game_data
-      YAML.load(File.open(storage_path, 'r')) rescue []
     end
 
     def submit_answer
@@ -143,17 +139,6 @@ module Codebreaker
       end
     end
 
-    def prepare_storage_dir
-      storage_dir = File.dirname(storage_path)
-      Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
-    end
-
-    def save_to_yml
-      File.open(storage_path, 'w') do |file|
-        file.write(YAML.dump(scores))
-      end
-    end
-
     def new_game
       print message['alerts']['new_game']
       if input_selector
@@ -179,7 +164,7 @@ module Codebreaker
 
     def erase_game_data
       begin
-        File.delete(storage_path)
+        erase_data_file
         scores.clear
         puts message['info']['successfully_erased'].green
       rescue
