@@ -451,10 +451,25 @@ module Codebreaker
 
     describe '#save_to_yml' do
       data_dir = "#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}"
-      after { File.delete(@current_yml) }
-      
-      it 'data folder should be not empty' do
-        expect { console.send(:save_to_yml) }.to change { Dir.empty?(data_dir) }.from(true).to(false)
+      after  { File.delete(@current_yml) }
+
+      context 'calls methods' do
+        before do
+          allow(console).to receive(:scores)
+          allow(console).to receive(:load_game_data)
+          console.send(:save_to_yml)
+        end
+
+        after { console.send(:save_to_yml) }
+
+        specify { expect(console).to receive(:scores) }
+        specify { expect(console).to receive(:load_game_data) }
+      end
+            
+      context 'when new scores exists' do
+        it 'data folder should be not empty' do
+          expect { console.send(:save_to_yml) }.to change { Dir.empty?(data_dir) }.from(true).to(false)
+        end
       end
     end
 
