@@ -8,6 +8,7 @@ module Codebreaker
     specify { should be_const_defined(:GameConfiguration) }
     specify { should be_const_defined(:Message) }
     specify { should be_const_defined(:Score) }
+    specify { should be_const_defined(:Storage) }
     specify { should be_const_defined(:Console) }
   end
 end
