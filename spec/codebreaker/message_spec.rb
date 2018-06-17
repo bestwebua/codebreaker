@@ -13,7 +13,7 @@ module Codebreaker
       end
 
       specify do
-        expect(object.message).to be_an_instance_of(Hash)
+        expect(object.send(:message)).to be_an_instance_of(Hash)
       end
     end
   end
