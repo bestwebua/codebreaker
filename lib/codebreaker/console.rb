@@ -11,7 +11,7 @@ module Codebreaker
     YES = 'y'.freeze
     EMPTY_INPUT = ''.freeze
 
-    attr_reader :game, :storage_path, :scores
+    attr_reader :game, :scores
 
     def initialize(game = DEMO)
       @locale = Localization.new(:console)
@@ -40,7 +40,7 @@ module Codebreaker
       @game = game
       @locale.lang = game.configuration.lang
       @game_config_snapshot = game.configuration.clone
-      @storage_path = File.expand_path('./data/scores.yml', File.dirname(__FILE__))
+      apply_external_path
       @scores = load_game_data
     end
 
