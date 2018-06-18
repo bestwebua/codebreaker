@@ -2,7 +2,20 @@ require 'yaml'
 
 module Codebreaker
   module Storage
+    attr_reader :storage_path
     private
+    def apply_external_path(external_path = false)
+      yml_file = 'scores.yml'
+      if external_path && !Dir.exists?(external_path)
+        raise ArgumentError, 'Invalid external path.'
+      end
+      @storage_path = if external_path
+        "#{external_path}/#{yml_file}"
+      else
+        File.expand_path("./data/#{yml_file}", File.dirname(__FILE__))
+      end
+    end
+
     def load_game_data
       YAML.load(File.open(storage_path, 'r')) rescue []
     end
