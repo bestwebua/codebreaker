@@ -56,6 +56,14 @@ module Codebreaker
           end
 
           context '#storage_path' do
+            before { console.send(:apply_external_path) }
+            after  { console.send(:apply_external_path) }
+
+            it '#apply_external_path call' do
+              allow(console).to receive(:apply_external_path)
+              expect(console).to receive(:apply_external_path)
+            end
+
             it 'should be an instance of String' do
               expect(console.storage_path).to be_an_instance_of(String)
             end
