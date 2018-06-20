@@ -181,13 +181,14 @@ module Codebreaker
 
       let(:attempts_still_have) { console.game.instance_variable_set(:@attempts, 1); console }
       let(:no_attempts_left) { console.game.instance_variable_set(:@attempts, 0); console }
+      let(:msg) { message['alerts']['motivation'] }
 
       context 'when attempts still have' do
-        specify { expect(attempts_still_have.send(:motivation_message)).to eq(message['alerts']['motivation']) }
+        specify { expect(attempts_still_have.send(:motivation_message, msg)).to eq(message['alerts']['motivation']) }
       end
 
       context 'when no attempts left' do
-        specify { expect(no_attempts_left.send(:motivation_message)).to be_nil }
+        specify { expect(no_attempts_left.send(:motivation_message, msg)).to be_nil }
       end
     end
 
