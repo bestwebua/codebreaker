@@ -4,6 +4,7 @@ require 'erb'
 module Codebreaker
   class Console
     include Message
+    include Motivation
     include Storage
 
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
@@ -74,19 +75,10 @@ module Codebreaker
       input
     end
 
-    def message_is_allowed?
-      !game.won? && game.attempts == rand(1..game.configuration.max_attempts)
-    end
-
-    def motivation_message
-      return unless message_is_allowed?
-      message['alerts']['motivation']
-    end
-
     def process(input)
       begin
         puts game.to_guess(input)
-        puts motivation_message
+        puts motivation_message(message['alerts']['motivation'])
       rescue => error
         puts error
         finish_game
