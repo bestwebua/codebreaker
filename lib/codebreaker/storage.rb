@@ -3,13 +3,16 @@ require 'yaml'
 module Codebreaker
   module Storage
     attr_reader :storage_path
+
     private
+
     def apply_external_path(external_path = false)
       yml_file = 'scores.yml'
-      if external_path && !Dir.exists?(external_path)
+      if external_path && !Dir.exist?(external_path)
         raise ArgumentError, 'Invalid external path.'
       end
-      @storage_path = if external_path
+      @storage_path =
+      if external_path
         "#{external_path}/#{yml_file}"
       else
         File.expand_path("./data/#{yml_file}", File.dirname(__FILE__))
@@ -22,7 +25,7 @@ module Codebreaker
 
     def prepare_storage_dir
       storage_dir = File.dirname(storage_path)
-      Dir.mkdir(storage_dir) unless File.exists?(storage_dir)
+      Dir.mkdir(storage_dir) unless File.exist?(storage_dir)
     end
 
     def save_to_yml
