@@ -5,6 +5,7 @@ module Codebreaker
   class Console
     include Message
     include Motivation
+    include UserScore
     include Storage
 
     DEMO = Game.new('Demo User', 5, 2, :middle, :en)
@@ -60,18 +61,18 @@ module Codebreaker
     def user_interaction(input = EMPTY_INPUT)
       return if game.attempts.zero?
       status, step = false, 0
-        until status
-          begin
-            game.guess_valid?(input)
-            status = true
-          rescue => error
-            puts error.to_s.red unless step.zero? || input == HINT
-            puts "#{message['alerts']['guess']}:"
-            input = gets.chomp
-            step += 1
-            show_hint if input == HINT
-          end
+      until status
+        begin
+          game.guess_valid?(input)
+          status = true
+        rescue => error
+          puts error.to_s.red unless step.zero? || input == HINT
+          puts "#{message['alerts']['guess']}:"
+          input = gets.chomp
+          step += 1
+          show_hint if input == HINT
         end
+      end
       input
     end
 
@@ -98,10 +99,10 @@ module Codebreaker
 
     def input_selector
       input = EMPTY_INPUT
-        until %w(y n).include?(input)
-          print " (y/n) #{message['alerts']['yes_or_no']}:"
-          input = gets.chomp
-        end
+      until %w[y n].include?(input)
+        print " (y/n) #{message['alerts']['yes_or_no']}:"
+        input = gets.chomp
+      end
       input == YES
     end
 
@@ -115,20 +116,6 @@ module Codebreaker
       prepare_storage_dir
       save_to_yml
       puts message['info']['successfully_saved'].green
-    end
-
-    def save_user_score
-      scores << current_user_score
-    end
-
-    def current_user_score
-      Score.new do |save|
-        save.date = Time.now
-        save.player_name = game.configuration.player_name
-        save.winner = game.won?
-        save.level = game.configuration.level
-        save.score = game.score
-      end
     end
 
     def new_game
