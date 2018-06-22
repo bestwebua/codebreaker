@@ -45,7 +45,7 @@ module Codebreaker
     end
 
     def localizations
-      @localizations ||= Hash.new
+      @localizations ||= {}
     end
 
     def merge_localizations
