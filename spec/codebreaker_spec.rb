@@ -6,6 +6,7 @@ module Codebreaker
     specify { should be_const_defined(:Localization) }
     specify { should be_const_defined(:Message) }
     specify { should be_const_defined(:Motivation) }
+    specify { should be_const_defined(:UserScore) }
     specify { should be_const_defined(:Storage) }
     specify { should be_const_defined(:Game) }
     specify { should be_const_defined(:GameConfiguration) }
