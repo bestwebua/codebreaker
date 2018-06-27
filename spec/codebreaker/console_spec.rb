@@ -23,7 +23,7 @@ module Codebreaker
         config.player_name = 'Mike'
         config.max_attempts = 5
         config.max_hints = 2
-        config.level = :middle
+        config.level = Game::MIDDLE_LEVEL
         config.lang = :en
       end
       Codebreaker::Console.new(game)

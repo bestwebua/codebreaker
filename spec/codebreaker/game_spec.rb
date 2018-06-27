@@ -17,7 +17,7 @@ module Codebreaker
         config.player_name = 'Mike'
         config.max_attempts = 5
         config.max_hints = 2
-        config.level = :simple
+        config.level = Game::SIMPLE_LEVEL
         config.lang = :en
       end
     end
@@ -34,7 +34,7 @@ module Codebreaker
       context 'with block or params' do
         describe 'with wrong params' do
           context 'when max_attempts, max_hints not integers' do
-            let(:not_integers) { Game.new('Mike', '5', '2', :simple, :end) }
+            let(:not_integers) { Game.new('Mike', '5', '2', Game::SIMPLE_LEVEL, :end) }
 
             specify do
               expect { not_integers }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
@@ -42,7 +42,7 @@ module Codebreaker
           end
 
           context 'when max_attempts < 1' do
-            let(:max_attempts) { Game.new('Mike', 0, 2, :simple, :end) }
+            let(:max_attempts) { Game.new('Mike', 0, 2, Game::SIMPLE_LEVEL, :end) }
 
             specify do
               expect { max_attempts }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
@@ -50,7 +50,7 @@ module Codebreaker
           end
 
           context 'when max_hints negative' do
-            let(:max_hints) { Game.new('Mike', 1, -1, :simple, :end) }
+            let(:max_hints) { Game.new('Mike', 1, -1, Game::SIMPLE_LEVEL, :end) }
 
             specify do
               expect { max_hints }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
@@ -235,12 +235,12 @@ module Codebreaker
               end
 
               context 'middle' do
-                before { game.configuration.level = :middle }
+                before { game.configuration.level = Game::MIDDLE_LEVEL }
                 specify { expect(get_score).to eq(-40) }
               end
 
               context 'hard' do
-                before { game.configuration.level = :hard }
+                before { game.configuration.level = Game::HARD_LEVEL }
                 specify { expect(get_score).to eq(-200) }
               end
 
@@ -261,12 +261,12 @@ module Codebreaker
               end
 
               context 'middle' do
-                before { game.configuration.level = :middle }
+                before { game.configuration.level = Game::MIDDLE_LEVEL }
                 specify { expect { get_score }.to change { game.score }.from(0).to(60) }
               end
 
               context 'hard' do
-                before { game.configuration.level = :hard }
+                before { game.configuration.level = Game::HARD_LEVEL }
                 specify { expect { get_score }.to change { game.score }.from(0).to(50) }
               end
             end
