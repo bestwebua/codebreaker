@@ -26,7 +26,7 @@ module Codebreaker
 
     describe '#new' do
       context 'without block or params' do
-        specify do 
+        specify do
           expect { subject }.to raise_error(RuntimeError, message['errors']['fail_configuration'])
         end
       end
@@ -146,6 +146,12 @@ module Codebreaker
 
           describe '#fancy_algo' do
             before { game.instance_variable_set(:@secret_code, [1, 2, 6, 4]) }
+
+            context 'some random cases' do
+              specify { expect(game.to_guess('5552')).to eq('-   ') }
+              specify { expect(game.to_guess('4664')).to eq('++  ') }
+              specify { expect(game.to_guess('6666')).to eq('+   ') }
+            end
 
             context 'guess item was equal secret item in the same position' do
               let(:guessed_items_sp_1) { game.to_guess('1264') }
