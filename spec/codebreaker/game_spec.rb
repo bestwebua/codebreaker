@@ -159,8 +159,8 @@ module Codebreaker
               let(:guessed_items_dp_1) { game.to_guess('2641') }
               let(:guessed_items_dp_2) { game.to_guess('2254') }
 
-              specify { expect(guessed_items_dp_1).to eq('--- ') }
-              specify { expect(guessed_items_dp_2).to eq('-+ +') }
+              specify { expect(guessed_items_dp_1).to eq('----') }
+              specify { expect(guessed_items_dp_2).to eq(' + +') }
             end
 
             context 'guess item was not equal any secret item' do
