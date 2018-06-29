@@ -1,3 +1,3 @@
 module Codebreaker
-  VERSION = '0.3.4.0'
+  VERSION = '0.3.4.1'
 end
