@@ -82,10 +82,21 @@ module Codebreaker
     end
 
     def fancy_algo(guess, secret_code)
-      guess.chars.map(&:to_i).map.with_index do |item, index|
+      guessed_indexes, guess = [], guess.chars.map(&:to_i)
+
+      guess.each_with_index do |item, index|
+        guessed_indexes << index if item == secret_code[index]
+      end
+
+      guess.map.with_index do |item, index|
+        not_guessed_secret_nums =
+          secret_code.reject.with_index do |_, guessed_index|
+            guessed_indexes.include?(guessed_index)
+          end
+
         case
           when item == secret_code[index] then RIGHT_ANSWER
-          when secret_code[index..-1].include?(item) then RIGHT_ANSWER_DIFF_INDEX
+          when not_guessed_secret_nums.include?(item) then RIGHT_ANSWER_DIFF_INDEX
           else WRONG_ANSWER
         end
       end.join
