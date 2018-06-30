@@ -48,7 +48,9 @@ module Codebreaker
     private
 
     def check_configuration
+      levels = [SIMPLE_LEVEL, MIDDLE_LEVEL, HARD_LEVEL]
       raise message['errors']['fail_configuration'] if configuration.any?(&:nil?)
+      raise message['errors']['unknown_level'] unless levels.include?(configuration.level)
       begin
         raise if configuration.max_attempts < 1 || configuration.max_hints.negative?
       rescue
@@ -106,8 +108,7 @@ module Codebreaker
       level_rates = case configuration.level
         when SIMPLE_LEVEL then [TEN_POINTS, ZERO_POINTS]
         when MIDDLE_LEVEL then [TWENTY_POINTS, TWENTY_POINTS]
-        when HARD_LEVEL   then [FIFTY_POINTS, ONE_HUNDRED_POINTS]
-        else raise message['errors']['unknown_level']
+        else [FIFTY_POINTS, ONE_HUNDRED_POINTS]
       end
 
       attempt_rate, hint_rate = level_rates
