@@ -33,27 +33,35 @@ module Codebreaker
 
       context 'with block or params' do
         describe 'with wrong params' do
-          context 'when max_attempts, max_hints not integers' do
-            let(:not_integers) { Game.new('Mike', '5', '2', Game::SIMPLE_LEVEL, :end) }
+          context 'max_attempts, max_hints not integers' do
+            let(:not_integers) { Game.new('Mike', '5', '2', Game::SIMPLE_LEVEL, :en) }
 
             specify do
               expect { not_integers }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
             end
           end
 
-          context 'when max_attempts < 1' do
-            let(:max_attempts) { Game.new('Mike', 0, 2, Game::SIMPLE_LEVEL, :end) }
+          context 'max_attempts < 1' do
+            let(:max_attempts) { Game.new('Mike', 0, 2, Game::SIMPLE_LEVEL, :en) }
 
             specify do
               expect { max_attempts }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
             end
           end
 
-          context 'when max_hints negative' do
-            let(:max_hints) { Game.new('Mike', 1, -1, Game::SIMPLE_LEVEL, :end) }
+          context 'max_hints negative' do
+            let(:max_hints) { Game.new('Mike', 1, -1, Game::SIMPLE_LEVEL, :en) }
 
             specify do
               expect { max_hints }.to raise_error(RuntimeError, message['errors']['fail_configuration_values'])
+            end
+          end
+
+          context 'unknown level' do
+            let(:unknown_level) { Game.new('Mike', 1, -1, :nonexistent_level, :en) }
+
+            specify do
+              expect { unknown_level }.to raise_error(RuntimeError, message['errors']['unknown_level'])
             end
           end
         end
@@ -242,14 +250,6 @@ module Codebreaker
               context 'hard' do
                 before { game.configuration.level = Game::HARD_LEVEL }
                 specify { expect(get_score).to eq(-200) }
-              end
-
-              context 'unknown' do
-                before { game.configuration.level = :unknown }
-
-                specify do
-                  expect { get_score }.to raise_error(RuntimeError, message['errors']['unknown_level'])
-                end
               end
             end
 
