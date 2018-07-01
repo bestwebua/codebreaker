@@ -175,6 +175,12 @@ module Codebreaker
               let(:not_guessed_items) { game.to_guess('3333') }
               specify { expect(not_guessed_items).to eq('    ') }
             end
+
+            context 'some random cases' do
+              specify { expect(game.to_guess('5552')).to eq('   -') }
+              specify { expect(game.to_guess('4664')).to eq('  ++') }
+              specify { expect(game.to_guess('6666')).to eq('  + ') }
+            end
           end
         end
 
