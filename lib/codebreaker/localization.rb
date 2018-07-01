@@ -17,6 +17,10 @@ module Codebreaker
       localizations[lang]
     end
 
+    def all
+      localizations.keys
+    end
+
     private
 
     def apply_external_path(external_path)
