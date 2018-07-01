@@ -114,6 +114,11 @@ module Codebreaker
       end
     end
 
+    describe '#all' do
+      specify { expect(localization.all).to be_an_instance_of(Array) }
+      specify { expect(localization.all).to eq(%i[en ru]) }
+    end
+
     describe '#lang' do
       context 'when language was not passed' do
         specify { expect(localization.lang).to eq(:en) }
