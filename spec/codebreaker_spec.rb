@@ -1,4 +1,4 @@
-require_relative '../lib/codebreaker'
+require 'spec_helper'
 
 module Codebreaker
   RSpec.describe Codebreaker do
