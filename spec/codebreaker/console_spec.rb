@@ -3,20 +3,18 @@ require 'spec_helper'
 module Codebreaker
   RSpec.describe Console do
     before(:context) do
-      @storage_dir = "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}"
-      Dir.mkdir(@storage_dir) unless File.exists?(@storage_dir)
-      @current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
-      @temp_yml = "#{File.expand_path('./temp_data/scores.yml', File.dirname(__FILE__))}"
-      @test_yml = "#{File.expand_path('./test_data/scores.yml', File.dirname(__FILE__))}"
-      data_empty = Dir.empty?("#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}")
-      FileUtils.mv(@current_yml, @temp_yml) unless data_empty
+      current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
+      @env = FileChef.new(current_yml)
+      @env.make
     end
 
     after(:context) do
-      temp_empty = Dir.empty?("#{File.expand_path('./temp_data/.', File.dirname(__FILE__))}")
-      FileUtils.mv(@temp_yml, @current_yml) unless temp_empty
-      Dir.rmdir(@storage_dir) if Dir.empty?(@storage_dir)
+      @env.clear
     end
+
+    let(:storage_dir) { "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}" }
+    let(:current_yml) { @env.tracking_files.first }
+    let(:test_yml)    { @env.test_files.first }
 
     subject(:console) do
       game = Codebreaker::Game.new do |config|
@@ -78,15 +76,16 @@ module Codebreaker
 
             describe '#load_game_data' do
               context 'when no saved data found' do
+                before { FileUtils.rm(current_yml) }
                 specify { expect(console.scores).to be_empty }
               end
 
               context 'when saved data exists' do
                 before do
-                  FileUtils.mv(@test_yml, @current_yml)
+                  FileUtils.mv(test_yml, current_yml)
                 end
 
-                after { FileUtils.mv(@current_yml, @test_yml) }
+                after { FileUtils.mv(current_yml, test_yml) }
 
                 specify { expect(console.scores).to_not be_empty }
 
@@ -450,7 +449,7 @@ module Codebreaker
     describe '#prepare_storage_dir' do
       let(:has_storage_dir) do
         console.send(:prepare_storage_dir)
-        File.exists?(@storage_dir)
+        File.exists?(storage_dir)
       end
 
       context 'storage dir should be exists' do
@@ -460,7 +459,7 @@ module Codebreaker
 
     describe '#save_to_yml' do
       data_dir = "#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}"
-      after  { File.delete(@current_yml) }
+      after  { File.delete(current_yml) }
 
       context 'calls methods' do
         before do
@@ -586,7 +585,7 @@ module Codebreaker
       end
 
       context 'when scores not empty' do
-        before { FileUtils.copy_file(@test_yml, @current_yml) }
+        before { FileUtils.copy_file(test_yml, current_yml) }
 
         it 'returns info message' do
           expect { console.send(:erase_game_data) }.to output { message['info']['successfully_erased'].green }.to_stdout
