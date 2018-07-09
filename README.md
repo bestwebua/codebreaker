@@ -45,6 +45,7 @@ Codebreaker::Console.new
   - Autoload localizations from locale dir
   - Default language
   - Ability to change locale
+  - Ability to use custom locale location
 
 ### Score features ###
   - Date
@@ -52,6 +53,9 @@ Codebreaker::Console.new
   - Winner or not
   - Level
   - Score
+
+### Testing ###
+  - RSpec tests have 100% code coverage
 
 ### Detail sample of Codebreaker usage ###
 
