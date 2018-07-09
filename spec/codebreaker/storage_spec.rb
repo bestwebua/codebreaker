@@ -43,7 +43,7 @@ module Codebreaker
         end
 
         context 'right argument' do
-          let(:external_storage_path) { "#{File.expand_path('./test_data', File.dirname(__FILE__))}" }
+          let(:external_storage_path) { "#{File.expand_path('./support/helpers/test_data', File.dirname(__FILE__))}" }
           let(:full_external_yml_path) { "#{external_storage_path}/scores.yml" }
           before { instance_with_module.send(:apply_external_path, external_storage_path) }
           
