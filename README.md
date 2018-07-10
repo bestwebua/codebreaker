@@ -1,4 +1,5 @@
-# Codebreaker [![Gem Version](https://badge.fury.io/rb/codebreaker2018.svg)](https://badge.fury.io/rb/codebreaker2018)
+# Codebreaker
+<a href="https://codeclimate.com/github/bestwebua/homework-04-codebreaker/maintainability"><img src="https://api.codeclimate.com/v1/badges/e723b730278fb95d668c/maintainability" /></a> <a href="https://codeclimate.com/github/bestwebua/homework-04-codebreaker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e723b730278fb95d668c/test_coverage" /></a> [![Gem Version](https://badge.fury.io/rb/codebreaker2018.svg)](https://badge.fury.io/rb/codebreaker2018)
 
 Codebreaker is a logic game in which the code-breaker tries to break a secret code created by a code-maker. The code-maker, which will be played by the application we’re going to write, creates a secret code of four numbers between 1 and 6.
 
@@ -53,6 +54,9 @@ Codebreaker::Console.new
   - Winner or not
   - Level
   - Score
+
+### Data saving ###
+  - Ability to use custom game-data location
 
 ### Testing ###
   - RSpec tests have 100% code coverage
