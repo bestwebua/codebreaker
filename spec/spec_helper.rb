@@ -1,13 +1,17 @@
 require 'simplecov'
+require 'rspec_file_chef'
+require 'codebreaker'
 
 SimpleCov.start do
   add_filter 'spec/'
 end
 
-rspec_custom = File.join(File.dirname(__FILE__), 'codebreaker/support/**/*.rb')
-Dir[File.expand_path(rspec_custom)].each { |file| require file }
+RspecFileChef::FileChef.configure do |config|
+  config.rspec_path = File.expand_path(__dir__)
+end
 
-require 'codebreaker'
+rspec_custom = File.join(File.dirname(__FILE__), 'support/**/*.rb')
+Dir[File.expand_path(rspec_custom)].each { |file| require file }
 
 RSpec.configure do |config|
 

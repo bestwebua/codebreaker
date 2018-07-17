@@ -4,7 +4,7 @@ module Codebreaker
   RSpec.describe Console do
     before(:context) do
       current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
-      @env = FileChef.new(current_yml)
+      @env = RspecFileChef::FileChef.new(current_yml)
       @env.make
     end
 
