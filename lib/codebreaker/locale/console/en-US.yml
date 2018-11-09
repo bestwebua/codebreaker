@@ -1,0 +1,21 @@
+:en:
+  errors:
+    wrong_object: Wrong object type!
+    file_not_found: Game data file not found. Nothing to delete.
+  alerts:
+    welcome: ....Codebreaker Console Game....
+    hint_info: Use '-h' for help.
+    hint: Hint
+    guess: Enter your guess
+    motivation: Come on, step on it!
+    won: You won!
+    lose: You lost(
+    yes_or_no:
+    save_game: Do you want to save your score?
+    new_game: Do you want to play again?
+    erase_scores: Do you want to erase all scores data? Attention, this action cannot be undone.
+    shutdown: Exit...
+  info:
+    results: <%= summary %> With total score <%= game.score %> points.
+    successfully_saved: Current game data was successfully saved.
+    successfully_erased: All game data was successfully erased.
