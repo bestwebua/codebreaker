@@ -1,0 +1,7 @@
+---
+- !ruby/struct:Codebreaker::Score
+  date: 2018-05-30 13:15:37.891327881 +03:00
+  player_name: Demo User
+  winner: false
+  level: :middle
+  score: -40
