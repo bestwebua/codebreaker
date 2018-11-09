@@ -1,7 +1,9 @@
 # codebreaker2018
-<a href="https://codeclimate.com/github/bestwebua/homework-04-codebreaker/maintainability"><img src="https://api.codeclimate.com/v1/badges/e723b730278fb95d668c/maintainability" /></a> <a href="https://codeclimate.com/github/bestwebua/homework-04-codebreaker/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e723b730278fb95d668c/test_coverage" /></a> [![Gem Version](https://badge.fury.io/rb/codebreaker2018.svg)](https://badge.fury.io/rb/codebreaker2018) [![Build Status](https://travis-ci.org/bestwebua/homework-04-codebreaker.svg?branch=feature%2Fbase_version)](https://travis-ci.org/bestwebua/homework-04-codebreaker)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6901f8941feb809fdaf6/maintainability)](https://codeclimate.com/github/bestwebua/codebreaker/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/6901f8941feb809fdaf6/test_coverage)](https://codeclimate.com/github/bestwebua/codebreaker/test_coverage) [![Gem Version](https://badge.fury.io/rb/codebreaker2018.svg)](https://badge.fury.io/rb/codebreaker2018) [![Build Status](https://travis-ci.org/bestwebua/codebreaker.svg?branch=master)](https://travis-ci.org/bestwebua/codebreaker)
 
 Codebreaker is a logic game in which the code-breaker tries to break a secret code created by a code-maker. The code-maker, which will be played by the application we’re going to write, creates a secret code of four numbers between 1 and 6. This is new terminal version of a game represented as Ruby gem.
+
+Codebreaker2018 Rack version: https://github.com/bestwebua/codebreaker-web
 
 ## Installation ##
 
@@ -112,8 +114,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bestwebua/homework-04-codebreaker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/bestwebua/codebreaker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
