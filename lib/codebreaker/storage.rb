@@ -7,16 +7,15 @@ module Codebreaker
     private
 
     def apply_external_path(external_path = false)
+      raise ArgumentError, 'Invalid external path.' if external_path && !Dir.exist?(external_path)
       yml_file = 'scores.yml'
-      if external_path && !Dir.exist?(external_path)
-        raise ArgumentError, 'Invalid external path.'
-      end
+
       @storage_path =
-      if external_path
-        "#{external_path}/#{yml_file}"
-      else
-        File.expand_path("./data/#{yml_file}", File.dirname(__FILE__))
-      end
+        if external_path
+          "#{external_path}/#{yml_file}"
+        else
+          File.expand_path("./data/#{yml_file}", File.dirname(__FILE__))
+        end
     end
 
     def load_game_data

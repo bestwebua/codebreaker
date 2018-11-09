@@ -22,7 +22,7 @@ module Codebreaker
     end
 
     def start_game
-      puts message['alerts']['welcome'].colorize(:background => :blue)
+      puts message['alerts']['welcome'].colorize(background: :blue)
       puts message['alerts']['hint_info']
       submit_answer
     end

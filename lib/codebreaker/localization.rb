@@ -27,7 +27,7 @@ module Codebreaker
       if external_path && Dir.glob("#{external_path}/*/*.yml").empty?
         raise ArgumentError, 'Invalid external path.'
       end
-      @external_path = external_path ? external_path : false
+      @external_path = external_path || false
     end
 
     def localizations_dir

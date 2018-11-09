@@ -47,6 +47,8 @@ module Codebreaker
 
     private
 
+    attr_reader :result, :secret_code
+
     def check_configuration
       levels = [SIMPLE_LEVEL, MIDDLE_LEVEL, HARD_LEVEL]
       raise message['errors']['fail_configuration'] if configuration.any?(&:nil?)
@@ -71,16 +73,8 @@ module Codebreaker
       create_instance_vars
     end
 
-    def result
-      @result
-    end
-
     def generate_secret_code
       @secret_code = (1..4).map { rand(1..6) }
-    end
-
-    def secret_code
-      @secret_code
     end
 
     def fancy_algo(guess, secret_code)
@@ -95,21 +89,21 @@ module Codebreaker
           secret_code.reject.with_index do |_, guessed_index|
             guessed_indexes.include?(guessed_index)
           end
-
         case
-          when item == secret_code[index] then RIGHT_ANSWER
-          when not_guessed_secret_nums.include?(item) then RIGHT_ANSWER_DIFF_INDEX
-          else WRONG_ANSWER
+        when item == secret_code[index] then RIGHT_ANSWER
+        when not_guessed_secret_nums.include?(item) then RIGHT_ANSWER_DIFF_INDEX
+        else WRONG_ANSWER
         end
       end.join
     end
 
     def calculate_score
-      level_rates = case configuration.level
+      level_rates =
+        case configuration.level
         when SIMPLE_LEVEL then [TEN_POINTS, ZERO_POINTS]
         when MIDDLE_LEVEL then [TWENTY_POINTS, TWENTY_POINTS]
         else [FIFTY_POINTS, ONE_HUNDRED_POINTS]
-      end
+        end
 
       attempt_rate, hint_rate = level_rates
       guessed = result.count(RIGHT_ANSWER)
