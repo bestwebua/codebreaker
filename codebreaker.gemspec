@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Codebreaker}
   spec.description   = %q{New version of logic terminal game with English and Russian localizations. For demo mode just use: Codebreaker::Console.new}
-  spec.homepage      = 'https://github.com/bestwebua/homework-04-codebreaker'
+  spec.homepage      = 'https://github.com/bestwebua/codebreaker'
   spec.license       = 'MIT'
 
   spec.required_ruby_version = '>= 2.5.0'
