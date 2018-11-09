@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module Codebreaker
   RSpec.describe Storage do
-    before(:context) do  
-      current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
+    before(:context) do
+      current_yml = File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__)).to_s
       @env = RspecFileChef::FileChef.new(current_yml)
       @env.make
     end
@@ -53,8 +53,9 @@ module Codebreaker
         context 'right argument' do
           let(:external_storage_path) { @env.test_dir }
           let(:full_external_yml_path) { @env.test_files.first }
+
           before { instance_with_module.send(:apply_external_path, external_storage_path) }
-          
+
           it 'returns path to external yml-file' do
             expect(storage_path).to eq(full_external_yml_path)
           end

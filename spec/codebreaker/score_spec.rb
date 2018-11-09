@@ -4,7 +4,7 @@ module Codebreaker
   RSpec.describe Score do
     describe '#initialize' do
       context 'new object' do
-        it 'should be child of Struct' do
+        it 'be child of Struct' do
           expect(subject.class.superclass).to eq(Struct)
         end
       end
@@ -21,7 +21,7 @@ module Codebreaker
         end
 
         it 'all passed values should be established' do
-          expect(with_block.values).to eq(%i(a b c d e))
+          expect(with_block.values).to eq(%i[a b c d e])
         end
       end
     end

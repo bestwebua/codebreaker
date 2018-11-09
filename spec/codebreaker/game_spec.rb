@@ -4,7 +4,7 @@ module Codebreaker
   RSpec.describe GameConfiguration do
     describe '#initialize' do
       context 'new object' do
-        it 'should be child of Struct' do
+        it 'be child of Struct' do
           expect(subject.class.superclass).to eq(Struct)
         end
       end
@@ -26,7 +26,7 @@ module Codebreaker
 
     describe '#new' do
       context 'without block or params' do
-        specify do 
+        specify do
           expect { subject }.to raise_error(RuntimeError, message['errors']['fail_configuration'])
         end
       end
@@ -101,6 +101,7 @@ module Codebreaker
 
           describe '#secret_code' do
             let(:secret_code) { game.instance_variable_get(:@secret_code) }
+
             specify { expect(secret_code).to be_an_instance_of(Array) }
 
             it 'has secret code' do
@@ -129,13 +130,13 @@ module Codebreaker
 
         describe '#to_guess' do
           describe '#to_guess actions' do
-            context 'if attempts are available' do
+            context 'when attempts are available' do
               it 'reduce attempts by one' do
                 expect { game.to_guess('1111') }.to change { game.attempts }.from(5).to(4)
               end
             end
 
-            context 'if method was called' do
+            context 'when method was called' do
               before { game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
 
               it 'result should be changed' do
@@ -218,7 +219,7 @@ module Codebreaker
                 game.instance_variable_set(:@result, '+++ ')
               end
 
-              it 'should return one of not guessed numbers' do
+              it 'returns one of not guessed numbers' do
                 expect(game.hint).to eq(4)
               end
             end

@@ -3,7 +3,7 @@ require 'spec_helper'
 module Codebreaker
   RSpec.describe Console do
     before(:context) do
-      current_yml = "#{File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__))}"
+      current_yml = File.expand_path('../../lib/codebreaker/data/scores.yml', File.dirname(__FILE__)).to_s
       @env = RspecFileChef::FileChef.new(current_yml)
       @env.make
     end
@@ -12,7 +12,7 @@ module Codebreaker
       @env.clear
     end
 
-    let(:storage_dir) { "#{File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__))}" }
+    let(:storage_dir) { File.expand_path('../../lib/codebreaker/data', File.dirname(__FILE__)).to_s }
     let(:current_yml) { @env.tracking_files.first }
     let(:test_yml)    { @env.test_files.first }
 
@@ -37,6 +37,7 @@ module Codebreaker
       describe '#load_console' do
         context 'when passed not Game object' do
           let(:with_wrong_object) { Codebreaker::Console.new(Object.new) }
+
           specify { expect { with_wrong_object }.to raise_error(ArgumentError, 'Wrong object type!') }
         end
 
@@ -62,11 +63,11 @@ module Codebreaker
               expect(console).to receive(:apply_external_path)
             end
 
-            it 'should be an instance of String' do
+            it 'be an instance of String' do
               expect(console.storage_path).to be_an_instance_of(String)
             end
 
-            it 'should be a path to yml-file' do
+            it 'be a path to yml-file' do
               expect(console.storage_path).to match(/.+scores\.yml\z/)
             end
           end
@@ -109,7 +110,7 @@ module Codebreaker
       after { console.start_game }
 
       it 'receive welcome message' do
-        expect(console).to receive(:puts).with(message['alerts']['welcome'].colorize(:background => :blue))
+        expect(console).to receive(:puts).with(message['alerts']['welcome'].colorize(background: :blue))
       end
 
       it 'receive about hint message' do
@@ -301,7 +302,7 @@ module Codebreaker
 
       context 'when no free attempts are available' do
         before { console.game.instance_variable_set(:@attempts, 1) }
-        
+
         it 'puts marked result' do
           expect(console).to receive(:puts)
         end
@@ -458,8 +459,8 @@ module Codebreaker
     end
 
     describe '#save_to_yml' do
-      data_dir = "#{File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__))}"
-      after  { File.delete(current_yml) }
+      data_dir = File.expand_path('../../lib/codebreaker/data/.', File.dirname(__FILE__)).to_s
+      after { File.delete(current_yml) }
 
       context 'calls methods' do
         before do
@@ -473,7 +474,7 @@ module Codebreaker
         specify { expect(console).to receive(:scores) }
         specify { expect(console).to receive(:load_game_data) }
       end
-            
+
       context 'when new scores exists' do
         it 'data folder should be not empty' do
           expect { console.send(:save_to_yml) }.to change { Dir.empty?(data_dir) }.from(true).to(false)
@@ -517,7 +518,7 @@ module Codebreaker
           allow(console).to receive(:exit_console)
         end
 
-        it 'should return exit message' do
+        it 'returns exit message' do
           expect(console).to receive(:puts).with(message['alerts']['shutdown'])
         end
 
@@ -529,7 +530,7 @@ module Codebreaker
 
     describe '#load_new_game' do
       before { console.send(:load_new_game) }
-      
+
       specify { expect(console.game).to be_an_instance_of(Game) }
 
       it 'config of new game should be equal to config snapshot' do

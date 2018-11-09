@@ -16,7 +16,7 @@ module Codebreaker
     describe 'method call' do
       context 'without argument' do
         specify do
-          expect {instance_with_module.send(:motivation_message)}.to raise_error(ArgumentError)
+          expect { instance_with_module.send(:motivation_message) }.to raise_error(ArgumentError)
         end
       end
     end
